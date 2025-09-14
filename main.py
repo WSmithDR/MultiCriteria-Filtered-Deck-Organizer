@@ -3,7 +3,7 @@ from aqt.utils import showInfo, qconnect
 from aqt.qt import QAction
 from .ui import ConfigDialog
 from aqt import gui_hooks
-from .constans import Constants
+from .constants import GeneralConstants
 
 
 class Main:
@@ -12,7 +12,7 @@ class Main:
     pass 
   
   def initialize(self):
-    action = QAction(Constants.ADDON_NAME,mw)
+    action = QAction(GeneralConstants.ADDON_NAME,mw)
     config_dialog = ConfigDialog()
     qconnect(action.triggered, lambda: config_dialog.exec())
     mw.form.menuTools.addAction(action)
