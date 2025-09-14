@@ -1,7 +1,7 @@
 from aqt import mw
 from aqt.utils import showInfo, qconnect
 from aqt.qt import QAction
-from .test import Test
+from .config_form import ConfigForm
 from aqt import gui_hooks
 from .constans import Constants
 
@@ -13,11 +13,11 @@ class Main:
   
   def initialize(self):
     action = QAction(Constants.ADDON_NAME,mw)
-    qconnect(action.triggered, Test.testFunction)
+    config_form = ConfigForm()
+    qconnect(action.triggered, lambda: config_form.exec())
     mw.form.menuTools.addAction(action)
 
     gui_hooks.editor_did_load_note.append(self.__onOpenCard)
 
   def __onOpenCard(self, editor):
     showInfo("Hinchando las pelotas")
-    
