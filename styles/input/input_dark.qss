@@ -1,0 +1,64 @@
+/* Input widget styles for dark mode */
+.nightMode QLineEdit,
+.night_mode QLineEdit,
+.nightMode QComboBox,
+.night_mode QComboBox,
+.nightMode QSpinBox,
+.night_mode QSpinBox {
+    padding: 5px;
+    border: 1px solid #555555;
+    border-radius: 3px;
+    background-color: #1e1e1e;
+    color: #cccccc;
+}
+
+.nightMode QLineEdit:focus,
+.night_mode QLineEdit:focus,
+.nightMode QComboBox:focus,
+.night_mode QComboBox:focus,
+.nightMode QSpinBox:focus,
+.night_mode QSpinBox:focus {
+    border: 2px solid #0078d7;
+    background-color: #252525;
+}
+
+/* Dropdown arrow styling for dark mode */
+.nightMode QComboBox::drop-down,
+.night_mode QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+
+.nightMode QComboBox::down-arrow,
+.night_mode QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #cccccc;
+}
+
+/* Spinbox arrows for dark mode */
+.nightMode QSpinBox::up-button,
+.night_mode QSpinBox::up-button,
+.nightMode QSpinBox::down-button,
+.night_mode QSpinBox::down-button {
+    background-color: #3e3e42;
+    border: 1px solid #555555;
+    width: 16px;
+}
+
+.nightMode QSpinBox::up-arrow,
+.night_mode QSpinBox::up-arrow {
+    image: none;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid #cccccc;
+}
+
+.nightMode QSpinBox::down-arrow,
+.night_mode QSpinBox::down-arrow {
+    image: none;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 3px solid #cccccc;
+}

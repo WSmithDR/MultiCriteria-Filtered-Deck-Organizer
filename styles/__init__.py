@@ -1,4 +1,7 @@
 import os
+from aqt import mw
+from aqt.theme import theme_manager
+
 
 class _Styles:
     """Clase que contiene todos los estilos CSS para la aplicación"""
@@ -15,25 +18,56 @@ class _Styles:
         except FileNotFoundError:
             return ""
     
-    @property
-    def GROUPBOX(self) -> str:
-        """Estilos para QGroupBox desde groupbox.qss"""
-        return _Styles._load_qss_file('groupbox.qss')
+    @staticmethod
+    def _is_dark_mode() -> bool:
+        """Detecta si Anki está en modo oscuro usando theme_manager"""
+        try:
+            # Usar directamente el theme_manager de aqt
+            if hasattr(theme_manager, 'night_mode'):
+                return theme_manager.night_mode
+            elif hasattr(theme_manager, 'dark_mode'):
+                return theme_manager.dark_mode
+        except Exception:
+            pass
+        return False  # Default a modo claro
     
-    @property
-    def BUTTON(self) -> str:
-        """Estilos para QPushButton desde button.qss"""
-        return _Styles._load_qss_file('button.qss')
-    
-    @property
-    def INPUT(self) -> str:
-        """Estilos para widgets de entrada desde input.qss"""
-        return _Styles._load_qss_file('input.qss')
+    @staticmethod
+    def _get_theme_suffix() -> str:
+        """Retorna el sufijo para archivos de estilos según el tema actual"""
+        return '_dark' if _Styles._is_dark_mode() else ''
     
     @property
     def DIALOG(self) -> str:
-        """Estilos para el diálogo principal desde dialog.qss"""
-        return _Styles._load_qss_file('dialog.qss')
+        """Estilos para el diálogo principal según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'dialog{suffix}.qss')
+    
+    @property
+    def BUTTON(self) -> str:
+        """Estilos para botones según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'button{suffix}.qss')
+    
+    @property
+    def INPUT(self) -> str:
+        """Estilos para widgets de entrada según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'input{suffix}.qss')
+    
+    @property
+    def GROUPBOX(self) -> str:
+        """Estilos para QGroupBox según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'groupbox{suffix}.qss')
+    
+    # Métodos de conveniencia
+    def get_theme_info(self) -> dict:
+        """Retorna información sobre el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return {
+            'dark_mode': _Styles._is_dark_mode(),
+            'stylesheet_suffix': suffix
+        }
 
 # Instancia global para acceso
 styles = _Styles()

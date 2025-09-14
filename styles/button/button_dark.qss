@@ -1,0 +1,45 @@
+/* Primary button styles for dark mode */
+.nightMode QPushButton,
+.night_mode QPushButton {
+    background-color: #3e3e42;
+    color: #cccccc;
+    border: 1px solid #555555;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.nightMode QPushButton:hover,
+.night_mode QPushButton:hover {
+    background-color: #505055;
+    border-color: #777777;
+}
+
+.nightMode QPushButton:pressed,
+.night_mode QPushButton:pressed {
+    background-color: #606065;
+    border-color: #888888;
+}
+
+/* Secondary button styles (cancel, etc.) for dark mode */
+.nightMode QPushButton#secondary,
+.night_mode QPushButton#secondary {
+    background-color: #454549;
+    color: #cccccc;
+    border: 1px solid #666666;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.nightMode QPushButton#secondary:hover,
+.night_mode QPushButton#secondary:hover {
+    background-color: #555559;
+    border-color: #777777;
+}
+
+.nightMode QPushButton#secondary:pressed,
+.night_mode QPushButton#secondary:pressed {
+    background-color: #666669;
+    border-color: #888888;
+}

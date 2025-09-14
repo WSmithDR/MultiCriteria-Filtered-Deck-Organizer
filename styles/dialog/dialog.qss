@@ -1,0 +1,113 @@
+/* Estilos adaptados para integrarse con el tema nativo de Anki */
+QDialog {
+    background-color: #ececec;  /* Color de fondo similar al de Anki */
+    color: #000000;           /* Texto negro por defecto */
+}
+
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+QScrollArea > QWidget > QWidget {
+    background-color: #ececec;
+}
+
+QWidget#main_widget {
+    background-color: #ececec;
+}
+
+/* Estilos para QGroupBox que coinciden con el diseño de Anki */
+QGroupBox {
+    background-color: #ffffff;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;  /* Radio consistente con Anki */
+    margin-top: 12px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 5px;
+    background-color: #ececec;
+    color: #000000;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* Estilos para botones consistentes con Anki */
+QPushButton {
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 13px;
+    color: #000000;
+    cursor: pointer;
+}
+
+QPushButton:hover {
+    background-color: #e0e0e0;
+    border-color: #a0a0a0;
+}
+
+QPushButton:pressed {
+    background-color: #d0d0d0;
+    border-color: #808080;
+}
+
+QPushButton#secondary {
+    background-color: #f8f8f8;
+    border-color: #d0d0d0;
+}
+
+/* Estilos para inputs consistentes con Anki */
+QLineEdit, QTextEdit, QComboBox {
+    background-color: #ffffff;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 13px;
+    color: #000000;
+}
+
+QLineEdit:focus, QTextEdit:focus, QComboBox:focus {
+    border-color: #0078d7;  /* Azul de enfoque similar a Anki */
+    outline: none;
+}
+
+/* Estilos para etiquetas */
+QLabel {
+    color: #000000;
+    font-size: 13px;
+}
+
+QLabel[style="color: #666666; font-style: italic;"] {
+    color: #666666;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Estilos para checkboxes */
+QCheckBox {
+    color: #000000;
+    font-size: 13px;
+    spacing: 8px;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    background-color: #ffffff;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #0078d7;
+    border-color: #0078d7;
+}

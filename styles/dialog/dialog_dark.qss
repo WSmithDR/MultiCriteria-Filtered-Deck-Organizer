@@ -1,0 +1,202 @@
+/* Estilos para modo oscuro adaptados al tema nativo de Anki */
+/* Estos estilos se aplican cuando Anki está en modo oscuro/night mode */
+
+/* Clase principal para modo oscuro - Anki usa .nightMode o .night_mode */
+.nightMode QDialog,
+.night_mode QDialog {
+    background-color: #2d2d30;  /* Fondo oscuro similar al de Anki */
+    color: #cccccc;            /* Texto claro para buen contraste */
+}
+
+.nightMode QScrollArea,
+.night_mode QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+.nightMode QScrollArea > QWidget > QWidget,
+.night_mode QScrollArea > QWidget > QWidget {
+    background-color: #2d2d30;
+}
+
+.nightMode QWidget#main_widget,
+.night_mode QWidget#main_widget {
+    background-color: #2d2d30;
+}
+
+/* Estilos para QGroupBox en modo oscuro */
+.nightMode QGroupBox,
+.night_mode QGroupBox {
+    background-color: #3e3e42;  /* Fondo ligeramente más claro que el fondo principal */
+    border: 1px solid #555555;
+    border-radius: 5px;
+    margin-top: 12px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    color: #cccccc;
+}
+
+.nightMode QGroupBox::title,
+.night_mode QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 5px;
+    background-color: #2d2d30;
+    color: #cccccc;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* Estilos para botones en modo oscuro */
+.nightMode QPushButton,
+.night_mode QPushButton {
+    background-color: #3e3e42;
+    border: 1px solid #555555;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 13px;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+.nightMode QPushButton:hover,
+.night_mode QPushButton:hover {
+    background-color: #505055;
+    border-color: #777777;
+}
+
+.nightMode QPushButton:pressed,
+.night_mode QPushButton:pressed {
+    background-color: #606065;
+    border-color: #888888;
+}
+
+.nightMode QPushButton#secondary,
+.night_mode QPushButton#secondary {
+    background-color: #454549;
+    border-color: #666666;
+}
+
+/* Estilos para inputs en modo oscuro */
+.nightMode QLineEdit,
+.night_mode QLineEdit,
+.nightMode QTextEdit,
+.night_mode QTextEdit,
+.nightMode QComboBox,
+.night_mode QComboBox {
+    background-color: #1e1e1e;
+    border: 1px solid #555555;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 13px;
+    color: #cccccc;
+}
+
+.nightMode QLineEdit:focus,
+.night_mode QLineEdit:focus,
+.nightMode QTextEdit:focus,
+.night_mode QTextEdit:focus,
+.nightMode QComboBox:focus,
+.night_mode QComboBox:focus {
+    border-color: #0078d7;  /* Azul de enfoque consistente */
+    outline: none;
+}
+
+/* Estilos para etiquetas en modo oscuro */
+.nightMode QLabel,
+.night_mode QLabel {
+    color: #cccccc;
+    font-size: 13px;
+}
+
+.nightMode QLabel[style="color: #666666; font-style: italic;"],
+.night_mode QLabel[style="color: #666666; font-style: italic;"] {
+    color: #999999;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Estilos para checkboxes en modo oscuro */
+.nightMode QCheckBox,
+.night_mode QCheckBox {
+    color: #cccccc;
+    font-size: 13px;
+    spacing: 8px;
+}
+
+.nightMode QCheckBox::indicator,
+.night_mode QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555555;
+    border-radius: 3px;
+    background-color: #3e3e42;
+}
+
+.nightMode QCheckBox::indicator:checked,
+.night_mode QCheckBox::indicator:checked {
+    background-color: #0078d7;
+    border-color: #0078d7;
+}
+
+/* Estilos para dropdowns/combobox en modo oscuro */
+.nightMode QComboBox::drop-down,
+.night_mode QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+
+.nightMode QComboBox::down-arrow,
+.night_mode QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #cccccc;
+}
+
+/* Estilos para scrollbars en modo oscuro */
+.nightMode QScrollBar:vertical,
+.night_mode QScrollBar:vertical {
+    background: #2d2d30;
+    width: 14px;
+    margin: 0px;
+}
+
+.nightMode QScrollBar::handle:vertical,
+.night_mode QScrollBar::handle:vertical {
+    background: #555555;
+    min-height: 20px;
+    border-radius: 7px;
+}
+
+.nightMode QScrollBar::handle:vertical:hover,
+.night_mode QScrollBar::handle:vertical:hover {
+    background: #777777;
+}
+
+.nightMode QScrollBar::add-line:vertical,
+.night_mode QScrollBar::add-line:vertical,
+.nightMode QScrollBar::sub-line:vertical,
+.night_mode QScrollBar::sub-line:vertical {
+    height: 0px;
+    background: none;
+}
+
+.nightMode QScrollBar::add-page:vertical,
+.night_mode QScrollBar::add-page:vertical,
+.nightMode QScrollBar::sub-page:vertical,
+.night_mode QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Estilos para tooltips en modo oscuro */
+.nightMode QToolTip,
+.night_mode QToolTip {
+    background-color: #3e3e42;
+    color: #cccccc;
+    border: 1px solid #555555;
+    padding: 4px;
+    border-radius: 3px;
+}

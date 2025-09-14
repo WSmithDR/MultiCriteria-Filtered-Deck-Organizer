@@ -31,6 +31,7 @@ class ConfigDialog(QDialog):
         
         # Crear un widget contenedor para el formulario
         form_widget = QWidget()
+        form_widget.setObjectName("main_widget")
         form_layout = QVBoxLayout()
         form_layout.setContentsMargins(0, 0, 0, 0)
         form_layout.setSpacing(15)

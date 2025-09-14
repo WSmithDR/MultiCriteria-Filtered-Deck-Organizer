@@ -1,0 +1,20 @@
+/* QGroupBox styles for dark mode */
+.nightMode QGroupBox,
+.night_mode QGroupBox {
+    font-weight: bold;
+    color: #cccccc;
+    border: 2px solid #555555;
+    border-radius: 6px;
+    margin-top: 6px;
+    padding-top: 10px;
+    background-color: #3e3e42;
+}
+
+.nightMode QGroupBox::title,
+.night_mode QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 7px;
+    padding: 0px 5px 0px 5px;
+    color: #cccccc;
+    background-color: #2d2d30;
+}
