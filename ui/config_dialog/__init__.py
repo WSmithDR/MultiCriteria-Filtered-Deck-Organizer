@@ -1,17 +1,15 @@
 from aqt.utils import showInfo
 from aqt.qt import QDialog, QVBoxLayout, QMessageBox
 from ...constants import GeneralConstants
-from .basic_config_section import BasicConfigSection
-from .search_section import SearchSection
-from .grouping_section import GroupingSection
-from .actions_section import ActionsSection
+from ..config_form import ConfigForm
 
 class ConfigDialog(QDialog):
-    """Diálogo principal de configuración para mazos filtrados"""
+    """Diálogo principal de configuración para mazos filtrados - maneja ventana y eventos"""
     
     def __init__(self, parent=None, edit_data=None):
         super().__init__(parent)
         self.edit_data = edit_data
+        self.config_form = ConfigForm()
         self.setup_ui()
         self.setup_connections()
         self.apply_styles()
@@ -25,22 +23,14 @@ class ConfigDialog(QDialog):
     
     def setup_ui(self):
         """Configura la interfaz de usuario principal"""
-        # Crear secciones
-        self.basic_section = BasicConfigSection()
-        self.search_section = SearchSection()
-        self.grouping_section = GroupingSection()
-        self.actions_section = ActionsSection()
-        
         # Layout principal
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(20, 20, 20, 20)
         main_layout.setSpacing(15)
         
-        # Agregar secciones al layout
-        main_layout.addWidget(self.basic_section)
-        main_layout.addWidget(self.search_section)
-        main_layout.addWidget(self.grouping_section)
-        main_layout.addWidget(self.actions_section)
+        # Agregar secciones del formulario al layout
+        for section in self.config_form.get_sections():
+            main_layout.addWidget(section)
         
         self.setLayout(main_layout)
         
@@ -57,9 +47,11 @@ class ConfigDialog(QDialog):
     
     def setup_connections(self):
         """Configura las conexiones de señales y slots"""
-        self.actions_section.connect_create_action(self.on_create_clicked)
-        self.actions_section.connect_test_action(self.on_test_clicked)
-        self.actions_section.connect_cancel_action(self.on_cancel_clicked)
+        self.config_form.setup_connections(
+            self.on_create_clicked,
+            self.on_test_clicked,
+            self.on_cancel_clicked
+        )
     
     def apply_styles(self):
         """Aplica estilos generales al diálogo"""
@@ -71,35 +63,11 @@ class ConfigDialog(QDialog):
     
     def load_edit_data(self):
         """Carga los datos para edición"""
-        if not self.edit_data:
-            return
-            
-        # Cargar datos en cada sección
-        if 'basic' in self.edit_data:
-            self.basic_section.set_data(self.edit_data['basic'])
-        
-        if 'search' in self.edit_data:
-            self.search_section.set_data(self.edit_data['search'])
-        
-        if 'grouping' in self.edit_data:
-            self.grouping_section.set_data(self.edit_data['grouping'])
-        
-        # Cambiar texto del botón para modo edición
-        self.actions_section.set_create_button_text("Actualizar Configuración")
+        self.config_form.load_edit_data(self.edit_data)
     
     def validate_form(self) -> bool:
         """Valida todo el formulario"""
-        errors = []
-        
-        # Validar cada sección
-        if not self.basic_section.is_valid():
-            errors.extend(self.basic_section.get_validation_errors())
-        
-        if not self.search_section.is_valid():
-            errors.extend(self.search_section.get_validation_errors())
-        
-        if not self.grouping_section.is_valid():
-            errors.extend(self.grouping_section.get_validation_errors())
+        errors = self.config_form.get_validation_errors()
         
         if errors:
             error_message = "Por favor corrija los siguientes errores:\n\n" + "\n".join(f"• {error}" for error in errors)
@@ -110,11 +78,7 @@ class ConfigDialog(QDialog):
     
     def get_form_data(self) -> dict:
         """Retorna todos los datos del formulario"""
-        return {
-            'basic': self.basic_section.get_data(),
-            'search': self.search_section.get_data(),
-            'grouping': self.grouping_section.get_data()
-        }
+        return self.config_form.get_form_data()
     
     def on_create_clicked(self):
         """Maneja el clic en el botón crear/actualizar"""
@@ -126,8 +90,8 @@ class ConfigDialog(QDialog):
         
         # Aquí iría la lógica para crear/actualizar los mazos filtrados
         # Por ahora, solo mostramos un mensaje
-        self.actions_section.set_status("Procesando...")
-        self.actions_section.disable_buttons(True)
+        self.config_form.actions_section.set_status("Procesando...")
+        self.config_form.actions_section.disable_buttons(True)
         
         # Simulación de procesamiento
         showInfo(
@@ -136,8 +100,8 @@ class ConfigDialog(QDialog):
             f"Grupos configurados: {len(form_data['grouping']['groups'])}"
         )
         
-        self.actions_section.set_status("Configuración completada")
-        self.actions_section.disable_buttons(False)
+        self.config_form.actions_section.set_status("Configuración completada")
+        self.config_form.actions_section.disable_buttons(False)
         
         # Cerrar el diálogo
         self.accept()
@@ -150,7 +114,7 @@ class ConfigDialog(QDialog):
         form_data = self.get_form_data()
         
         # Aquí iría la lógica para probar la configuración
-        self.actions_section.set_status("Probando configuración...")
+        self.config_form.actions_section.set_status("Probando configuración...")
         
         showInfo(
             f"Prueba de configuración '{form_data['basic']['name']}'.\n"
@@ -158,7 +122,7 @@ class ConfigDialog(QDialog):
             f"Se crearían {len(form_data['grouping']['groups'])} grupos de mazos."
         )
         
-        self.actions_section.set_status("Prueba completada")
+        self.config_form.actions_section.set_status("Prueba completada")
     
     def on_cancel_clicked(self):
         """Maneja el clic en el botón cancelar"""
@@ -166,7 +130,4 @@ class ConfigDialog(QDialog):
     
     def clear_form(self):
         """Limpia todos los campos del formulario"""
-        self.basic_section.clear_data()
-        self.search_section.clear_data()
-        self.grouping_section.clear_data()
-        self.actions_section.clear_data()
+        self.config_form.clear_form()
