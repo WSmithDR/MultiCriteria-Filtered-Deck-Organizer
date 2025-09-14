@@ -1,6 +1,6 @@
 from typing import Dict, Any
-from aqt.qt import QGroupBox, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QListWidget, QPushButton, QLabel, QFormLayout, QHBoxLayout
-from ...constants.ui import UIConstants
+from aqt.qt import QGroupBox, QVBoxLayout, QPushButton, QLabel, QFormLayout, QHBoxLayout
+from ...constants import UIConstants,ButtonWidthType, LabelWordWrap
 from ...styles import styles
 
 class BaseSection(QGroupBox):
@@ -38,27 +38,29 @@ class BaseSection(QGroupBox):
         widget.setStyleSheet(styles.INPUT)
         return widget
     
-    def _create_styled_button(self, text, width_type='normal'):
+    def _create_styled_button(self, text, width_type=ButtonWidthType.NORMAL):
         """Crea un botón con estilos comunes"""
         button = QPushButton(text)
         button.setStyleSheet(styles.BUTTON)
         
-        if width_type == 'extended':
+        if width_type == ButtonWidthType.EXTENDED:
             button.setFixedWidth(UIConstants.BUTTON_WIDTH_EXTENDED)
         else:
             button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         return button
     
-    def _create_styled_label(self, text, object_name=None, word_wrap=True):
+    def _create_styled_label(self, text, object_name=None, word_wrap=LabelWordWrap.ENABLED):
         """Crea una etiqueta con estilos comunes"""
         label = QLabel(text)
         label.setStyleSheet(styles.LABEL)
         
         if object_name:
             label.setObjectName(object_name)
-        if word_wrap:
+        if word_wrap == LabelWordWrap.ENABLED:
             label.setWordWrap(True)
+        else:
+            label.setWordWrap(False)
         
         return label
     
