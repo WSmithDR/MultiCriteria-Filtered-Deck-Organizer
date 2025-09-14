@@ -1,13 +1,11 @@
 from typing import Dict, Any, List
 from aqt.qt import (
-    QComboBox, QCheckBox, QLineEdit, QLabel, 
-    QFormLayout, QVBoxLayout, QHBoxLayout, QSpinBox,
-    QPushButton, QListWidget, QListWidgetItem, Qt
+    QCheckBox, QVBoxLayout, QHBoxLayout, QSpinBox,
+    QListWidget, QListWidgetItem, Qt, QComboBox, QLineEdit
 )
 from .base_section import BaseSection
 from ...constants import GroupingType, GroupingCombination
 from ...constants.ui import UIConstants
-from ...styles import styles
 
 class GroupingSection(BaseSection):
     """Sección para configurar el agrupamiento de mazos filtrados"""
@@ -27,38 +25,36 @@ class GroupingSection(BaseSection):
     def create_widgets(self):
         """Crea los widgets para la sección de agrupamiento"""
         # Tipo de agrupamiento principal
-        self.grouping_type_combo = QComboBox()
+        self.grouping_type_combo = self._create_styled_input(QComboBox)
         for group_type in GroupingType:
             self.grouping_type_combo.addItem(group_type.value.replace('_', ' ').title(), group_type)
-        self.grouping_type_combo.setStyleSheet(styles.INPUT)
         
         # Tipo de combinación
-        self.combination_type_combo = QComboBox()
+        self.combination_type_combo = self._create_styled_input(QComboBox)
         for combo_type in GroupingCombination:
             self.combination_type_combo.addItem(combo_type.value.replace('_', ' ').title(), combo_type)
-        self.combination_type_combo.setStyleSheet(styles.INPUT)
         
         # Campo para nombre de campo (cuando se selecciona FIELD_CONTENT)
-        self.field_name_input = QLineEdit()
-        self.field_name_input.setPlaceholderText(UIConstants.PLACEHOLDER_FIELD_NAME)
-        self.field_name_input.setStyleSheet(styles.INPUT)
+        self.field_name_input = self._create_styled_input(
+            QLineEdit,
+            UIConstants.PLACEHOLDER_FIELD_NAME
+        )
         
         # Habilitar múltiples grupos
         self.enable_multiple_check = QCheckBox(UIConstants.CHECKBOX_ENABLE_MULTIPLE)
         
         # Lista de grupos actuales
-        self.grouping_list = QListWidget()
+        self.grouping_list = self._create_styled_input(QListWidget)
         self.grouping_list.setMaximumHeight(UIConstants.LIST_MAX_HEIGHT)
-        self.grouping_list.setStyleSheet(styles.INPUT)
         
         # Botones para gestionar grupos
-        self.add_group_button = QPushButton(UIConstants.BUTTON_ADD_GROUP)
-        self.add_group_button.setStyleSheet(styles.BUTTON)
-        self.add_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
+        self.add_group_button = self._create_styled_button(
+            UIConstants.BUTTON_ADD_GROUP
+        )
         
-        self.remove_group_button = QPushButton(UIConstants.BUTTON_REMOVE_GROUP)
-        self.remove_group_button.setStyleSheet(styles.BUTTON)
-        self.remove_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
+        self.remove_group_button = self._create_styled_button(
+            UIConstants.BUTTON_REMOVE_GROUP
+        )
         
         # Conectar señales
         self.grouping_type_combo.currentTextChanged.connect(self._on_grouping_type_changed)
@@ -68,31 +64,25 @@ class GroupingSection(BaseSection):
     def setup_layout(self):
         """Configura el layout de la sección"""
         # Layout principal
-        main_layout = QVBoxLayout()
+        main_layout = self._create_vertical_layout()
         
         # Form layout para configuración básica
-        form_layout = QFormLayout()
+        form_layout = self._create_form_layout()
         form_layout.addRow("Tipo de agrupamiento:", self.grouping_type_combo)
         form_layout.addRow("Combinación:", self.combination_type_combo)
         form_layout.addRow("Campo (si aplica):", self.field_name_input)
         
         main_layout.addLayout(form_layout)
-        
-        # Checkbox para múltiples grupos
         main_layout.addWidget(self.enable_multiple_check)
+        main_layout.addWidget(self.grouping_list)
         
-        # Layout para lista de grupos y botones
-        group_layout = QHBoxLayout()
-        group_layout.addWidget(self.grouping_list)
-        
-        # Layout vertical para botones
-        button_layout = QVBoxLayout()
+        # Layout horizontal para botones
+        button_layout = self._create_horizontal_layout()
         button_layout.addWidget(self.add_group_button)
         button_layout.addWidget(self.remove_group_button)
         button_layout.addStretch()
         
-        group_layout.addLayout(button_layout)
-        main_layout.addLayout(group_layout)
+        main_layout.addLayout(button_layout)
         
         # Agregar al layout de la sección
         self.layout.addLayout(main_layout)

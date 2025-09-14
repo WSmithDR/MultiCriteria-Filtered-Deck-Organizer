@@ -1,8 +1,7 @@
 from typing import Dict, Any
-from aqt.qt import QLineEdit, QLabel, QFormLayout
+from aqt.qt import QLineEdit, QFormLayout
 from .base_section import BaseSection
 from ...constants.ui import UIConstants
-from ...styles import styles
 
 class BasicConfigSection(BaseSection):
     """Sección para la configuración básica (nombre de la configuración)"""
@@ -15,24 +14,21 @@ class BasicConfigSection(BaseSection):
     
     def create_widgets(self):
         """Crea los widgets para la sección de configuración básica"""
-        self.name_input = QLineEdit()
-        self.name_input.setPlaceholderText(UIConstants.PLACEHOLDER_CONFIG_NAME)
-        self.name_input.setStyleSheet(styles.INPUT)
+        self.name_input = self._create_styled_input(
+            QLineEdit,
+            UIConstants.PLACEHOLDER_CONFIG_NAME
+        )
         
         # Etiqueta de descripción
-        description_label = QLabel(
-            UIConstants.LABEL_CONFIG_DESCRIPTION
+        self.description_label = self._create_styled_label(
+            UIConstants.LABEL_CONFIG_DESCRIPTION,
+            UIConstants.OBJECT_NAME_DESCRIPTION_LABEL
         )
-        description_label.setWordWrap(True)
-        description_label.setObjectName(UIConstants.OBJECT_NAME_DESCRIPTION_LABEL)
-        description_label.setStyleSheet(styles.LABEL)
-        
-        self.description_label = description_label
     
     def setup_layout(self):
         """Configura el layout de la sección"""
         # Usamos QFormLayout para mejor organización
-        form_layout = QFormLayout()
+        form_layout = self._create_form_layout()
         form_layout.addRow(UIConstants.LABEL_NAME, self.name_input)
         
         # Agregamos el form layout y la descripción al layout principal

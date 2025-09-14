@@ -1,8 +1,7 @@
 from typing import Dict, Any
-from aqt.qt import QLineEdit, QLabel, QTextEdit, QFormLayout, QVBoxLayout, Qt
+from aqt.qt import QTextEdit, QFormLayout, QVBoxLayout, Qt
 from .base_section import BaseSection
 from ...constants.ui import UIConstants
-from ...styles import styles
 
 class SearchSection(BaseSection):
     """Sección para la consulta de búsqueda de tarjetas"""
@@ -17,35 +16,32 @@ class SearchSection(BaseSection):
     def create_widgets(self):
         """Crea los widgets para la sección de búsqueda"""
         # Campo de texto para la búsqueda
-        self.search_input = QTextEdit()
-        self.search_input.setPlaceholderText(
-            UIConstants.PLACEHOLDER_SEARCH_EXAMPLE
+        self.search_input = self._create_styled_input(
+            QTextEdit,
+            UIConstants.PLACEHOLDER_SEARCH_EXAMPLE,
+            UIConstants.TEXT_EDIT_MAX_HEIGHT
         )
-        self.search_input.setMaximumHeight(UIConstants.TEXT_EDIT_MAX_HEIGHT)
-        self.search_input.setStyleSheet(styles.INPUT)
         
         # Etiqueta de ejemplos
-        self.example_label = QLabel(
+        self.example_label = self._create_styled_label(
             UIConstants.SEARCH_EXAMPLES_TITLE +
             UIConstants.SEARCH_EXAMPLE_DECK +
             UIConstants.SEARCH_EXAMPLE_DUE +
             UIConstants.SEARCH_EXAMPLE_TAG +
             UIConstants.SEARCH_EXAMPLE_CONTENT +
-            UIConstants.SEARCH_EXAMPLE_RATED
+            UIConstants.SEARCH_EXAMPLE_RATED,
+            UIConstants.OBJECT_NAME_EXAMPLE_LABEL
         )
-        self.example_label.setWordWrap(True)
-        self.example_label.setObjectName(UIConstants.OBJECT_NAME_EXAMPLE_LABEL)
-        self.example_label.setStyleSheet(styles.LABEL)
         self.example_label.setTextFormat(Qt.TextFormat.RichText)
         self.example_label.setOpenExternalLinks(False)
     
     def setup_layout(self):
         """Configura el layout de la sección"""
         # Layout principal
-        main_layout = QVBoxLayout()
+        main_layout = self._create_vertical_layout()
         
         # Form layout para el campo de búsqueda
-        form_layout = QFormLayout()
+        form_layout = self._create_form_layout()
         form_layout.addRow(UIConstants.LABEL_SEARCH_QUERY, self.search_input)
         
         main_layout.addLayout(form_layout)

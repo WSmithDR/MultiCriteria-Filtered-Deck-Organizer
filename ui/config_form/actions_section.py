@@ -1,8 +1,7 @@
 from typing import Dict, Any
-from aqt.qt import QPushButton, QHBoxLayout, QLabel
+from aqt.qt import QHBoxLayout, Qt
 from .base_section import BaseSection
 from ...constants.ui import UIConstants
-from ...styles import styles
 
 class ActionsSection(BaseSection):
     """Sección para los botones de acción del formulario"""
@@ -19,30 +18,34 @@ class ActionsSection(BaseSection):
     def create_widgets(self):
         """Crea los widgets para la sección de acciones"""
         # Botón principal para crear mazos
-        self.create_button = QPushButton(UIConstants.BUTTON_CREATE_FILTERED_DECKS)
-        self.create_button.setStyleSheet(styles.BUTTON)
-        self.create_button.setFixedWidth(UIConstants.BUTTON_WIDTH_EXTENDED)
+        self.create_button = self._create_styled_button(
+            UIConstants.BUTTON_CREATE_FILTERED_DECKS,
+            'extended'
+        )
         
         # Botón para probar la configuración
-        self.test_button = QPushButton(UIConstants.BUTTON_TEST_CONFIGURATION)
-        self.test_button.setStyleSheet(styles.BUTTON)
-        self.test_button.setFixedWidth(UIConstants.BUTTON_WIDTH_EXTENDED)
+        self.test_button = self._create_styled_button(
+            UIConstants.BUTTON_TEST_CONFIGURATION,
+            'extended'
+        )
         
         # Botón para cancelar
-        self.cancel_button = QPushButton(UIConstants.BUTTON_CANCEL)
+        self.cancel_button = self._create_styled_button(
+            UIConstants.BUTTON_CANCEL,
+            'normal'
+        )
         self.cancel_button.setObjectName(UIConstants.OBJECT_NAME_SECONDARY)
-        self.cancel_button.setStyleSheet(styles.BUTTON)
-        self.cancel_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         # Etiqueta de estado
-        self.status_label = QLabel(UIConstants.STATUS_READY)
-        self.status_label.setObjectName(UIConstants.OBJECT_NAME_STATUS_LABEL)
-        self.status_label.setStyleSheet(styles.LABEL)
+        self.status_label = self._create_styled_label(
+            UIConstants.STATUS_READY,
+            UIConstants.OBJECT_NAME_STATUS_LABEL
+        )
     
     def setup_layout(self):
         """Configura el layout de la sección"""
         # Layout horizontal para botones
-        button_layout = QHBoxLayout()
+        button_layout = self._create_horizontal_layout()
         button_layout.addWidget(self.create_button)
         button_layout.addWidget(self.test_button)
         button_layout.addWidget(self.cancel_button)

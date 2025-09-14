@@ -1,5 +1,5 @@
 from typing import Dict, Any
-from aqt.qt import QGroupBox, QVBoxLayout
+from aqt.qt import QGroupBox, QVBoxLayout, QLineEdit, QTextEdit, QComboBox, QListWidget, QPushButton, QLabel, QFormLayout, QHBoxLayout
 from ...constants.ui import UIConstants
 from ...styles import styles
 
@@ -26,6 +26,56 @@ class BaseSection(QGroupBox):
     def _apply_styles(self):
         """Aplica estilos CSS a la sección"""
         self.setStyleSheet(styles.GROUPBOX)
+    
+    # Métodos comunes para configuración de widgets
+    def _create_styled_input(self, widget_class, placeholder_text=None, max_height=None):
+        """Crea un widget de entrada con estilos comunes"""
+        widget = widget_class()
+        if placeholder_text:
+            widget.setPlaceholderText(placeholder_text)
+        if max_height:
+            widget.setMaximumHeight(max_height)
+        widget.setStyleSheet(styles.INPUT)
+        return widget
+    
+    def _create_styled_button(self, text, width_type='normal'):
+        """Crea un botón con estilos comunes"""
+        button = QPushButton(text)
+        button.setStyleSheet(styles.BUTTON)
+        
+        if width_type == 'extended':
+            button.setFixedWidth(UIConstants.BUTTON_WIDTH_EXTENDED)
+        else:
+            button.setFixedWidth(UIConstants.BUTTON_WIDTH)
+        
+        return button
+    
+    def _create_styled_label(self, text, object_name=None, word_wrap=True):
+        """Crea una etiqueta con estilos comunes"""
+        label = QLabel(text)
+        label.setStyleSheet(styles.LABEL)
+        
+        if object_name:
+            label.setObjectName(object_name)
+        if word_wrap:
+            label.setWordWrap(True)
+        
+        return label
+    
+    def _create_form_layout(self):
+        """Crea un QFormLayout con márgenes y espaciado estándar"""
+        layout = QFormLayout()
+        return layout
+    
+    def _create_horizontal_layout(self):
+        """Crea un QHBoxLayout con espaciado estándar"""
+        layout = QHBoxLayout()
+        return layout
+    
+    def _create_vertical_layout(self):
+        """Crea un QVBoxLayout con márgenes y espaciado estándar"""
+        layout = QVBoxLayout()
+        return layout
     
     # Métodos abstractos implementados manualmente
     def create_widgets(self):
