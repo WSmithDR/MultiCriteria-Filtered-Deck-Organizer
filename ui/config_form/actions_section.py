@@ -1,7 +1,8 @@
 from typing import Dict, Any
 from aqt.qt import QPushButton, QHBoxLayout, QLabel
 from .base_section import BaseSection
-from ...constants import UIConstants
+from ...constants.ui import UIConstants
+from ...styles import styles
 
 class ActionsSection(BaseSection):
     """Sección para los botones de acción del formulario"""
@@ -19,30 +20,18 @@ class ActionsSection(BaseSection):
         """Crea los widgets para la sección de acciones"""
         # Botón principal para crear mazos
         self.create_button = QPushButton(UIConstants.BUTTON_CREATE_FILTERED_DECKS)
-        self.create_button.setStyleSheet(UIConstants.BUTTON_STYLE)
+        self.create_button.setStyleSheet(styles.BUTTON)
         self.create_button.setFixedWidth(UIConstants.BUTTON_WIDTH + 40)
         
         # Botón para probar la configuración
         self.test_button = QPushButton(UIConstants.BUTTON_TEST_CONFIGURATION)
-        self.test_button.setStyleSheet(UIConstants.BUTTON_STYLE)
+        self.test_button.setStyleSheet(styles.BUTTON)
         self.test_button.setFixedWidth(UIConstants.BUTTON_WIDTH + 40)
         
         # Botón para cancelar
         self.cancel_button = QPushButton(UIConstants.BUTTON_CANCEL)
-        self.cancel_button.setStyleSheet("""
-            QPushButton {
-                background-color: #cccccc;
-                color: #333333;
-                border: none;
-                padding: 8px 16px;
-                border-radius: 4px;
-                font-weight: bold;
-            }
-            
-            QPushButton:hover {
-                background-color: #bbbbbb;
-            }
-        """)
+        self.cancel_button.setObjectName("secondary")
+        self.cancel_button.setStyleSheet(styles.BUTTON)
         self.cancel_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         # Etiqueta de estado

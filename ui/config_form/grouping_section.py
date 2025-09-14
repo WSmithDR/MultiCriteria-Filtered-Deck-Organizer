@@ -5,7 +5,9 @@ from aqt.qt import (
     QPushButton, QListWidget, QListWidgetItem, Qt
 )
 from .base_section import BaseSection
-from ...constants import GroupingType, GroupingCombination, UIConstants
+from ...constants import GroupingType, GroupingCombination
+from ...constants.ui import UIConstants
+from ...styles import styles
 
 class GroupingSection(BaseSection):
     """Sección para configurar el agrupamiento de mazos filtrados"""
@@ -28,18 +30,18 @@ class GroupingSection(BaseSection):
         self.grouping_type_combo = QComboBox()
         for group_type in GroupingType:
             self.grouping_type_combo.addItem(group_type.value.replace('_', ' ').title(), group_type)
-        self.grouping_type_combo.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.grouping_type_combo.setStyleSheet(styles.INPUT)
         
         # Tipo de combinación
         self.combination_type_combo = QComboBox()
         for combo_type in GroupingCombination:
             self.combination_type_combo.addItem(combo_type.value.replace('_', ' ').title(), combo_type)
-        self.combination_type_combo.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.combination_type_combo.setStyleSheet(styles.INPUT)
         
         # Campo para nombre de campo (cuando se selecciona FIELD_CONTENT)
         self.field_name_input = QLineEdit()
         self.field_name_input.setPlaceholderText(UIConstants.PLACEHOLDER_FIELD_NAME)
-        self.field_name_input.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.field_name_input.setStyleSheet(styles.INPUT)
         
         # Habilitar múltiples grupos
         self.enable_multiple_check = QCheckBox(UIConstants.CHECKBOX_ENABLE_MULTIPLE)
@@ -47,15 +49,15 @@ class GroupingSection(BaseSection):
         # Lista de grupos actuales
         self.grouping_list = QListWidget()
         self.grouping_list.setMaximumHeight(120)
-        self.grouping_list.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.grouping_list.setStyleSheet(styles.INPUT)
         
         # Botones para gestionar grupos
         self.add_group_button = QPushButton(UIConstants.BUTTON_ADD_GROUP)
-        self.add_group_button.setStyleSheet(UIConstants.BUTTON_STYLE)
+        self.add_group_button.setStyleSheet(styles.BUTTON)
         self.add_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         self.remove_group_button = QPushButton(UIConstants.BUTTON_REMOVE_GROUP)
-        self.remove_group_button.setStyleSheet(UIConstants.BUTTON_STYLE)
+        self.remove_group_button.setStyleSheet(styles.BUTTON)
         self.remove_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         # Conectar señales

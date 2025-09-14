@@ -1,7 +1,8 @@
 from typing import Dict, Any
 from aqt.qt import QLineEdit, QLabel, QTextEdit, QFormLayout, QVBoxLayout, Qt
 from .base_section import BaseSection
-from ...constants import UIConstants
+from ...constants.ui import UIConstants
+from ...styles import styles
 
 class SearchSection(BaseSection):
     """Sección para la consulta de búsqueda de tarjetas"""
@@ -21,7 +22,7 @@ class SearchSection(BaseSection):
             UIConstants.PLACEHOLDER_SEARCH_EXAMPLE
         )
         self.search_input.setMaximumHeight(100)
-        self.search_input.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.search_input.setStyleSheet(styles.INPUT)
         
         # Etiqueta de ejemplos
         self.example_label = QLabel(

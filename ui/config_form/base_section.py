@@ -1,6 +1,7 @@
 from typing import Dict, Any
 from aqt.qt import QGroupBox, QVBoxLayout
-from ...constants import UIConstants
+from ...constants.ui import UIConstants
+from ...styles import styles
 
 class BaseSection(QGroupBox):
     """Clase base para todas las secciones del formulario"""
@@ -24,7 +25,7 @@ class BaseSection(QGroupBox):
     
     def _apply_styles(self):
         """Aplica estilos CSS a la sección"""
-        self.setStyleSheet(UIConstants.SECTION_STYLE)
+        self.setStyleSheet(styles.GROUPBOX)
     
     # Métodos abstractos implementados manualmente
     def create_widgets(self):

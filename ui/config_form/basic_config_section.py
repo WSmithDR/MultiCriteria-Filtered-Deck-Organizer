@@ -1,7 +1,8 @@
 from typing import Dict, Any
 from aqt.qt import QLineEdit, QLabel, QFormLayout
 from .base_section import BaseSection
-from ...constants import UIConstants
+from ...constants.ui import UIConstants
+from ...styles import styles
 
 class BasicConfigSection(BaseSection):
     """Sección para la configuración básica (nombre de la configuración)"""
@@ -16,7 +17,7 @@ class BasicConfigSection(BaseSection):
         """Crea los widgets para la sección de configuración básica"""
         self.name_input = QLineEdit()
         self.name_input.setPlaceholderText(UIConstants.PLACEHOLDER_CONFIG_NAME)
-        self.name_input.setStyleSheet(UIConstants.INPUT_STYLE)
+        self.name_input.setStyleSheet(styles.INPUT)
         
         # Etiqueta de descripción
         description_label = QLabel(
