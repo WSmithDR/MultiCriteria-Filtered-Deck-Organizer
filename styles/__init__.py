@@ -29,6 +29,11 @@ class _Styles:
     def INPUT(self) -> str:
         """Estilos para widgets de entrada desde input.qss"""
         return _Styles._load_qss_file('input.qss')
+    
+    @property
+    def DIALOG(self) -> str:
+        """Estilos para el diálogo principal desde dialog.qss"""
+        return _Styles._load_qss_file('dialog.qss')
 
 # Instancia global para acceso
 styles = _Styles()

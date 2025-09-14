@@ -1,6 +1,7 @@
 from aqt.utils import showInfo
-from aqt.qt import QDialog, QVBoxLayout, QMessageBox
+from aqt.qt import QDialog, QVBoxLayout, QMessageBox, QScrollArea, QWidget, Qt
 from ...constants import GeneralConstants, UIConstants
+from ...styles import styles
 from ..config_form import ConfigForm
 
 class ConfigDialog(QDialog):
@@ -28,10 +29,27 @@ class ConfigDialog(QDialog):
         main_layout.setContentsMargins(20, 20, 20, 20)
         main_layout.setSpacing(15)
         
-        # Agregar secciones del formulario al layout
-        for section in self.config_form.get_sections():
-            main_layout.addWidget(section)
+        # Crear un widget contenedor para el formulario
+        form_widget = QWidget()
+        form_layout = QVBoxLayout()
+        form_layout.setContentsMargins(0, 0, 0, 0)
+        form_layout.setSpacing(15)
         
+        # Agregar secciones del formulario al layout del widget
+        for section in self.config_form.get_sections():
+            form_layout.addWidget(section)
+        
+        form_widget.setLayout(form_layout)
+        
+        # Crear scroll area y configurar el widget contenedor
+        scroll_area = QScrollArea()
+        scroll_area.setWidget(form_widget)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # Solo scroll vertical
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        
+        # Agregar el scroll area al layout principal
+        main_layout.addWidget(scroll_area)
         self.setLayout(main_layout)
         
         # Configurar tamaño mínimo
@@ -55,11 +73,7 @@ class ConfigDialog(QDialog):
     
     def apply_styles(self):
         """Aplica estilos generales al diálogo"""
-        self.setStyleSheet("""
-            QDialog {
-                background-color: #ffffff;
-            }
-        """)
+        self.setStyleSheet(styles.DIALOG)
     
     def load_edit_data(self):
         """Carga los datos para edición"""
