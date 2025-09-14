@@ -1,0 +1,32 @@
+/* Estilos para etiquetas (QLabel) en modo oscuro */
+
+/* Etiqueta de estado - estilo normal */
+.nightMode QLabel#status_label,
+.night_mode QLabel#status_label {
+    color: #cccccc;
+    font-style: italic;
+}
+
+/* Etiqueta de descripción */
+.nightMode QLabel#description_label,
+.night_mode QLabel#description_label {
+    color: #cccccc;
+    font-size: 12px;
+}
+
+/* Etiqueta de ejemplos */
+.nightMode QLabel#example_label,
+.night_mode QLabel#example_label {
+    color: #cccccc;
+    font-size: 11px;
+    padding: 5px;
+    background-color: #3d3d40;
+    border-radius: 3px;
+}
+
+/* Etiqueta de estado con error */
+.nightMode QLabel#status_label.error,
+.night_mode QLabel#status_label.error {
+    color: #ff6b6b;
+    font-weight: bold;
+}

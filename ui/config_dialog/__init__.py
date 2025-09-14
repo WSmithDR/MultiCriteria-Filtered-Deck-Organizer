@@ -20,21 +20,31 @@ class ConfigDialog(QDialog):
             self.load_edit_data()
             self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_EDIT} - {GeneralConstants.ADDON_NAME}")
         else:
-            self.setWindowTitle(GeneralConstants.ADDON_NAME)
+            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_MAIN} - {GeneralConstants.ADDON_NAME}")
     
     def setup_ui(self):
         """Configura la interfaz de usuario principal"""
         # Layout principal
         main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(15)
+        main_layout.setContentsMargins(
+            UIConstants.DIALOG_MAIN_MARGIN,
+            UIConstants.DIALOG_MAIN_MARGIN,
+            UIConstants.DIALOG_MAIN_MARGIN,
+            UIConstants.DIALOG_MAIN_MARGIN
+        )
+        main_layout.setSpacing(UIConstants.DIALOG_MAIN_SPACING)
         
         # Crear un widget contenedor para el formulario
         form_widget = QWidget()
-        form_widget.setObjectName("main_widget")
+        form_widget.setObjectName(UIConstants.OBJECT_NAME_MAIN_WIDGET)
         form_layout = QVBoxLayout()
-        form_layout.setContentsMargins(0, 0, 0, 0)
-        form_layout.setSpacing(15)
+        form_layout.setContentsMargins(
+            UIConstants.DIALOG_CONTENT_MARGIN,
+            UIConstants.DIALOG_CONTENT_MARGIN,
+            UIConstants.DIALOG_CONTENT_MARGIN,
+            UIConstants.DIALOG_CONTENT_MARGIN
+        )  # Padding para el contenedor scrollable
+        form_layout.setSpacing(UIConstants.DIALOG_CONTENT_SPACING)
         
         # Agregar secciones del formulario al layout del widget
         for section in self.config_form.get_sections():
@@ -54,8 +64,8 @@ class ConfigDialog(QDialog):
         self.setLayout(main_layout)
         
         # Configurar tamaño mínimo
-        self.setMinimumWidth(600)
-        self.setMinimumHeight(700)
+        self.setMinimumWidth(UIConstants.DIALOG_MIN_WIDTH)
+        self.setMinimumHeight(UIConstants.DIALOG_MIN_HEIGHT)
         
         # Centrar la ventana
         if self.parent():
@@ -105,17 +115,19 @@ class ConfigDialog(QDialog):
         
         # Aquí iría la lógica para crear/actualizar los mazos filtrados
         # Por ahora, solo mostramos un mensaje
-        self.config_form.actions_section.set_status("Procesando...")
+        self.config_form.actions_section.set_status(UIConstants.STATUS_PROCESSING)
         self.config_form.actions_section.disable_buttons(True)
         
         # Simulación de procesamiento
         showInfo(
-            f"Configuración '{form_data['basic']['name']}' guardada exitosamente.\n"
-            f"Query: {form_data['search']['search_query']}\n"
-            f"Grupos configurados: {len(form_data['grouping']['groups'])}"
+            UIConstants.INFO_CONFIG_SAVED.format(
+                name=form_data['basic']['name'],
+                query=form_data['search']['search_query'],
+                groups=len(form_data['grouping']['groups'])
+            )
         )
         
-        self.config_form.actions_section.set_status("Configuración completada")
+        self.config_form.actions_section.set_status(UIConstants.STATUS_CONFIGURATION_COMPLETED)
         self.config_form.actions_section.disable_buttons(False)
         
         # Cerrar el diálogo
@@ -129,15 +141,17 @@ class ConfigDialog(QDialog):
         form_data = self.get_form_data()
         
         # Aquí iría la lógica para probar la configuración
-        self.config_form.actions_section.set_status("Probando configuración...")
+        self.config_form.actions_section.set_status(UIConstants.STATUS_TESTING_CONFIGURATION)
         
         showInfo(
-            f"Prueba de configuración '{form_data['basic']['name']}'.\n"
-            f"La consulta buscaría: {form_data['search']['search_query']}\n"
-            f"Se crearían {len(form_data['grouping']['groups'])} grupos de mazos."
+            UIConstants.INFO_CONFIG_TEST.format(
+                name=form_data['basic']['name'],
+                query=form_data['search']['search_query'],
+                groups=f"{len(form_data['grouping']['groups'])} groups of decks"
+            )
         )
         
-        self.config_form.actions_section.set_status("Prueba completada")
+        self.config_form.actions_section.set_status(UIConstants.STATUS_TEST_COMPLETED)
     
     def on_cancel_clicked(self):
         """Maneja el clic en el botón cancelar"""

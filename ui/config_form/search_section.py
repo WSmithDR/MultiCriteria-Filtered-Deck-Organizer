@@ -21,7 +21,7 @@ class SearchSection(BaseSection):
         self.search_input.setPlaceholderText(
             UIConstants.PLACEHOLDER_SEARCH_EXAMPLE
         )
-        self.search_input.setMaximumHeight(100)
+        self.search_input.setMaximumHeight(UIConstants.TEXT_EDIT_MAX_HEIGHT)
         self.search_input.setStyleSheet(styles.INPUT)
         
         # Etiqueta de ejemplos
@@ -34,10 +34,8 @@ class SearchSection(BaseSection):
             UIConstants.SEARCH_EXAMPLE_RATED
         )
         self.example_label.setWordWrap(True)
-        self.example_label.setStyleSheet(
-            "color: #666666; font-size: 11px; padding: 5px; "
-            "background-color: #f5f5f5; border-radius: 3px;"
-        )
+        self.example_label.setObjectName(UIConstants.OBJECT_NAME_EXAMPLE_LABEL)
+        self.example_label.setStyleSheet(styles.LABEL)
         self.example_label.setTextFormat(Qt.TextFormat.RichText)
         self.example_label.setOpenExternalLinks(False)
     

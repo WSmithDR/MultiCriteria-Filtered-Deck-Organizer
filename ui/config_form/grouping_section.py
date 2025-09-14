@@ -48,7 +48,7 @@ class GroupingSection(BaseSection):
         
         # Lista de grupos actuales
         self.grouping_list = QListWidget()
-        self.grouping_list.setMaximumHeight(120)
+        self.grouping_list.setMaximumHeight(UIConstants.LIST_MAX_HEIGHT)
         self.grouping_list.setStyleSheet(styles.INPUT)
         
         # Botones para gestionar grupos
@@ -105,10 +105,10 @@ class GroupingSection(BaseSection):
         # Mostrar/ocultar campo de nombre de campo según el tipo
         if value == GroupingType.FIELD_CONTENT.value:
             self.field_name_input.setEnabled(True)
-            self.field_name_input.setPlaceholderText("Nombre del campo a agrupar")
+            self.field_name_input.setPlaceholderText(UIConstants.PLACEHOLDER_FIELD_NAME_ACTIVE)
         else:
             self.field_name_input.setEnabled(False)
-            self.field_name_input.setPlaceholderText("No aplica para este tipo")
+            self.field_name_input.setPlaceholderText(UIConstants.PLACEHOLDER_FIELD_NAME_INACTIVE)
             self.field_name_input.clear()
     
     def _add_group(self):
@@ -188,10 +188,10 @@ class GroupingSection(BaseSection):
         """Retorna errores de validación"""
         errors = []
         if not self.is_valid():
-            errors.append("Debe agregar al menos un grupo de agrupamiento")
+            errors.append(UIConstants.ERROR_NO_GROUPS)
         
         current_type = self.grouping_type_combo.currentData()
         if current_type == GroupingType.FIELD_CONTENT and not self.field_name_input.text().strip():
-            errors.append("Debe especificar un nombre de campo para el agrupamiento por contenido")
+            errors.append(UIConstants.ERROR_NO_FIELD_NAME)
         
         return errors

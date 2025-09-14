@@ -24,7 +24,8 @@ class BasicConfigSection(BaseSection):
             UIConstants.LABEL_CONFIG_DESCRIPTION
         )
         description_label.setWordWrap(True)
-        description_label.setStyleSheet("color: #666666; font-size: 12px;")
+        description_label.setObjectName(UIConstants.OBJECT_NAME_DESCRIPTION_LABEL)
+        description_label.setStyleSheet(styles.LABEL)
         
         self.description_label = description_label
     

@@ -3,12 +3,12 @@ from aqt.utils import showInfo, qconnect
 from aqt.qt import QAction
 from .ui import ConfigDialog
 from aqt import gui_hooks
-from .constants import GeneralConstants
+from .constants import GeneralConstants, UIConstants
 
 
 class Main:
   def __init__(self):
-    #showInfo("Addon has been initilialized!")
+    #showInfo(UIConstants.INFO_ADDON_INITIALIZED)
     pass 
   
   def initialize(self):
@@ -20,4 +20,4 @@ class Main:
     gui_hooks.editor_did_load_note.append(self.__onOpenCard)
 
   def __onOpenCard(self, editor):
-    showInfo("Hinchando las pelotas")
+    showInfo(UIConstants.INFO_CARD_OPENED)

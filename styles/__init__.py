@@ -60,6 +60,12 @@ class _Styles:
         suffix = _Styles._get_theme_suffix()
         return _Styles._load_qss_file(f'groupbox{suffix}.qss')
     
+    @property
+    def LABEL(self) -> str:
+        """Estilos para QLabel según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'label{suffix}.qss')
+    
     # Métodos de conveniencia
     def get_theme_info(self) -> dict:
         """Retorna información sobre el tema actual"""
