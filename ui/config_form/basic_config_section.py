@@ -50,14 +50,10 @@ class BasicConfigSection(BaseSection):
         """Limpia los datos de la sección"""
         self.name_input.clear()
     
-    def is_valid(self) -> bool:
-        """Valida que el nombre no esté vacío"""
-        name = self.name_input.text().strip()
-        return len(name) > 0
-    
-    def get_validation_errors(self) -> list:
-        """Retorna errores de validación"""
+    def validate(self) -> list:
+        """Valida los datos de la sección"""
         errors = []
-        if not self.is_valid():
+        name = self.name_input.text().strip()
+        if len(name) == 0:
             errors.append("El nombre de la configuración es obligatorio")
         return errors

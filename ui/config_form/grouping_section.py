@@ -1,7 +1,6 @@
 from typing import Dict, Any, List
 from aqt.qt import (
-    QCheckBox, QVBoxLayout, QHBoxLayout, QSpinBox,
-    QListWidget, QListWidgetItem, Qt, QComboBox, QLineEdit
+    QCheckBox, QListWidget, QListWidgetItem, Qt, QComboBox, QLineEdit
 )
 from .base_section import BaseSection
 from ...constants import GroupingType, GroupingCombination
@@ -170,14 +169,10 @@ class GroupingSection(BaseSection):
         self.enable_multiple_check.setChecked(False)
         self.grouping_list.clear()
     
-    def is_valid(self) -> bool:
-        """Valida que haya al menos un grupo configurado"""
-        return self.grouping_list.count() > 0
-    
-    def get_validation_errors(self) -> list:
-        """Retorna errores de validación"""
+    def validate(self) -> list:
+        """Valida los datos de la sección"""
         errors = []
-        if not self.is_valid():
+        if self.grouping_list.count() == 0:
             errors.append(UIConstants.ERROR_NO_GROUPS)
         
         current_type = self.grouping_type_combo.currentData()

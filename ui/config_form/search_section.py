@@ -65,14 +65,10 @@ class SearchSection(BaseSection):
         """Limpia los datos de la sección"""
         self.search_input.clear()
     
-    def is_valid(self) -> bool:
-        """Valida que la consulta no esté vacía"""
-        query = self.search_input.toPlainText().strip()
-        return len(query) > 0
-    
-    def get_validation_errors(self) -> list:
-        """Retorna errores de validación"""
+    def validate(self) -> list:
+        """Valida los datos de la sección"""
         errors = []
-        if not self.is_valid():
+        query = self.search_input.toPlainText().strip()
+        if len(query) == 0:
             errors.append("La consulta de búsqueda es obligatoria")
         return errors
