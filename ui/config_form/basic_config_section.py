@@ -7,7 +7,7 @@ class BasicConfigSection(BaseSection):
     """Sección para la configuración básica (nombre de la configuración)"""
     
     def __init__(self, parent=None):
-        super().__init__("Configuración Básica", parent)
+        super().__init__(UIConstants.SECTION_BASIC_CONFIG, parent)
         self.name_input = None
         self.create_widgets()
         self.setup_layout()
@@ -15,12 +15,12 @@ class BasicConfigSection(BaseSection):
     def create_widgets(self):
         """Crea los widgets para la sección de configuración básica"""
         self.name_input = QLineEdit()
-        self.name_input.setPlaceholderText("Ingrese el nombre de la configuración...")
+        self.name_input.setPlaceholderText(UIConstants.PLACEHOLDER_CONFIG_NAME)
         self.name_input.setStyleSheet(UIConstants.INPUT_STYLE)
         
         # Etiqueta de descripción
         description_label = QLabel(
-            "Nombre que identificará esta configuración de mazos filtrados"
+            UIConstants.LABEL_CONFIG_DESCRIPTION
         )
         description_label.setWordWrap(True)
         description_label.setStyleSheet("color: #666666; font-size: 12px;")
@@ -31,7 +31,7 @@ class BasicConfigSection(BaseSection):
         """Configura el layout de la sección"""
         # Usamos QFormLayout para mejor organización
         form_layout = QFormLayout()
-        form_layout.addRow("Nombre:", self.name_input)
+        form_layout.addRow(UIConstants.LABEL_NAME, self.name_input)
         
         # Agregamos el form layout y la descripción al layout principal
         self.layout.addLayout(form_layout)

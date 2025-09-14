@@ -11,7 +11,7 @@ class GroupingSection(BaseSection):
     """Sección para configurar el agrupamiento de mazos filtrados"""
     
     def __init__(self, parent=None):
-        super().__init__("Agrupamiento - GROUP BY", parent)
+        super().__init__(UIConstants.SECTION_GROUPING, parent)
         self.grouping_type_combo = None
         self.combination_type_combo = None
         self.field_name_input = None
@@ -38,11 +38,11 @@ class GroupingSection(BaseSection):
         
         # Campo para nombre de campo (cuando se selecciona FIELD_CONTENT)
         self.field_name_input = QLineEdit()
-        self.field_name_input.setPlaceholderText("Nombre del campo a agrupar...")
+        self.field_name_input.setPlaceholderText(UIConstants.PLACEHOLDER_FIELD_NAME)
         self.field_name_input.setStyleSheet(UIConstants.INPUT_STYLE)
         
         # Habilitar múltiples grupos
-        self.enable_multiple_check = QCheckBox("Habilitar múltiples grupos")
+        self.enable_multiple_check = QCheckBox(UIConstants.CHECKBOX_ENABLE_MULTIPLE)
         
         # Lista de grupos actuales
         self.grouping_list = QListWidget()
@@ -50,11 +50,11 @@ class GroupingSection(BaseSection):
         self.grouping_list.setStyleSheet(UIConstants.INPUT_STYLE)
         
         # Botones para gestionar grupos
-        self.add_group_button = QPushButton("Agregar Grupo")
+        self.add_group_button = QPushButton(UIConstants.BUTTON_ADD_GROUP)
         self.add_group_button.setStyleSheet(UIConstants.BUTTON_STYLE)
         self.add_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
-        self.remove_group_button = QPushButton("Eliminar Grupo")
+        self.remove_group_button = QPushButton(UIConstants.BUTTON_REMOVE_GROUP)
         self.remove_group_button.setStyleSheet(UIConstants.BUTTON_STYLE)
         self.remove_group_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         

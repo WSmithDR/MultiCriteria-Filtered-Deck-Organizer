@@ -7,7 +7,7 @@ class ActionsSection(BaseSection):
     """Sección para los botones de acción del formulario"""
     
     def __init__(self, parent=None):
-        super().__init__("Acciones", parent)
+        super().__init__(UIConstants.SECTION_ACTIONS, parent)
         self.create_button = None
         self.test_button = None
         self.cancel_button = None
@@ -18,17 +18,17 @@ class ActionsSection(BaseSection):
     def create_widgets(self):
         """Crea los widgets para la sección de acciones"""
         # Botón principal para crear mazos
-        self.create_button = QPushButton("Crear Mazos Filtrados")
+        self.create_button = QPushButton(UIConstants.BUTTON_CREATE_FILTERED_DECKS)
         self.create_button.setStyleSheet(UIConstants.BUTTON_STYLE)
         self.create_button.setFixedWidth(UIConstants.BUTTON_WIDTH + 40)
         
         # Botón para probar la configuración
-        self.test_button = QPushButton("Probar Configuración")
+        self.test_button = QPushButton(UIConstants.BUTTON_TEST_CONFIGURATION)
         self.test_button.setStyleSheet(UIConstants.BUTTON_STYLE)
         self.test_button.setFixedWidth(UIConstants.BUTTON_WIDTH + 40)
         
         # Botón para cancelar
-        self.cancel_button = QPushButton("Cancelar")
+        self.cancel_button = QPushButton(UIConstants.BUTTON_CANCEL)
         self.cancel_button.setStyleSheet("""
             QPushButton {
                 background-color: #cccccc;
@@ -46,7 +46,7 @@ class ActionsSection(BaseSection):
         self.cancel_button.setFixedWidth(UIConstants.BUTTON_WIDTH)
         
         # Etiqueta de estado
-        self.status_label = QLabel("Listo para crear mazos filtrados")
+        self.status_label = QLabel(UIConstants.STATUS_READY)
         self.status_label.setStyleSheet("color: #666666; font-style: italic;")
     
     def setup_layout(self):

@@ -1,6 +1,6 @@
 from aqt.utils import showInfo
 from aqt.qt import QDialog, QVBoxLayout, QMessageBox
-from ...constants import GeneralConstants
+from ...constants import GeneralConstants, UIConstants
 from ..config_form import ConfigForm
 
 class ConfigDialog(QDialog):
@@ -17,7 +17,7 @@ class ConfigDialog(QDialog):
         # Si estamos en modo edición, cargar los datos
         if self.edit_data:
             self.load_edit_data()
-            self.setWindowTitle(f"Editar Configuración - {GeneralConstants.ADDON_NAME}")
+            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_EDIT} - {GeneralConstants.ADDON_NAME}")
         else:
             self.setWindowTitle(GeneralConstants.ADDON_NAME)
     

@@ -7,7 +7,7 @@ class SearchSection(BaseSection):
     """Sección para la consulta de búsqueda de tarjetas"""
     
     def __init__(self, parent=None):
-        super().__init__("Búsqueda - WHERE", parent)
+        super().__init__(UIConstants.SECTION_SEARCH, parent)
         self.search_input = None
         self.example_label = None
         self.create_widgets()
@@ -18,19 +18,19 @@ class SearchSection(BaseSection):
         # Campo de texto para la búsqueda
         self.search_input = QTextEdit()
         self.search_input.setPlaceholderText(
-            "Ej: deck:Current OR tag:important is:due"
+            UIConstants.PLACEHOLDER_SEARCH_EXAMPLE
         )
         self.search_input.setMaximumHeight(100)
         self.search_input.setStyleSheet(UIConstants.INPUT_STYLE)
         
         # Etiqueta de ejemplos
         self.example_label = QLabel(
-            "<b>Ejemplos:</b><br>"
-            "• <code>deck:Spanish</code> - Mazo específico<br>"
-            "• <code>is:due</code> - Tarjetas pendientes<br>"
-            "• <code>tag:important</code> - Por etiqueta<br>"
-            "• <code>Front:*vocabulary*</code> - Por contenido<br>"
-            "• <code>is:rated</code> - Tarjetas calificadas"
+            UIConstants.SEARCH_EXAMPLES_TITLE +
+            UIConstants.SEARCH_EXAMPLE_DECK +
+            UIConstants.SEARCH_EXAMPLE_DUE +
+            UIConstants.SEARCH_EXAMPLE_TAG +
+            UIConstants.SEARCH_EXAMPLE_CONTENT +
+            UIConstants.SEARCH_EXAMPLE_RATED
         )
         self.example_label.setWordWrap(True)
         self.example_label.setStyleSheet(
@@ -47,7 +47,7 @@ class SearchSection(BaseSection):
         
         # Form layout para el campo de búsqueda
         form_layout = QFormLayout()
-        form_layout.addRow("Consulta de búsqueda:", self.search_input)
+        form_layout.addRow(UIConstants.LABEL_SEARCH_QUERY, self.search_input)
         
         main_layout.addLayout(form_layout)
         main_layout.addWidget(self.example_label)
