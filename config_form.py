@@ -9,6 +9,8 @@ class ConfigForm(QDialog):
 
     self.edit = QLineEdit("Write my name here")
     self.button = QPushButton("Show greeting")
+    
+    self.setWindowTitle("Config Form")
 
     layout = QVBoxLayout()
     layout.addWidget(self.edit)
