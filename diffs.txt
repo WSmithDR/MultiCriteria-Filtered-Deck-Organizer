@@ -1,0 +1,436 @@
+diff --git a/services/__init__.py b/services/__init__.py
+deleted file mode 100644
+index 031d661..0000000
+--- a/services/__init__.py
++++ /dev/null
+@@ -1,9 +0,0 @@
+-from .validation_mixin import ValidationMixin
+-from .data_management_mixin import DataManagementMixin
+-from .abstract_section_interface import AbstractSectionInterface
+-
+-__all__ = [
+-    "ValidationMixin",
+-    "DataManagementMixin",
+-    "AbstractSectionInterface"
+-]
+diff --git a/services/abstract_section_interface.py b/services/abstract_section_interface.py
+deleted file mode 100644
+index 0307555..0000000
+--- a/services/abstract_section_interface.py
++++ /dev/null
+@@ -1,15 +0,0 @@
+-from abc import abstractmethod
+-
+-
+-class AbstractSectionInterface:
+-    """Abstract interface that all sections must implement"""
+-    
+-    @abstractmethod
+-    def create_widgets(self):
+-        """Crea los widgets para la sección"""
+-        pass
+-    
+-    @abstractmethod
+-    def setup_layout(self):
+-        """Configura el layout de la sección"""
+-        pass
+diff --git a/services/data_management_mixin.py b/services/data_management_mixin.py
+deleted file mode 100644
+index 4486ffc..0000000
+--- a/services/data_management_mixin.py
++++ /dev/null
+@@ -1,31 +0,0 @@
+-from abc import abstractmethod
+-from typing import Dict, Any
+-
+-
+-class DataManagementMixin:
+-    """Mixin class that provides data management functionality"""
+-    
+-    @abstractmethod
+-    def get_data(self) -> Dict[str, Any]:
+-        """
+-        Retorna los datos de la sección
+-        
+-        Returns:
+-            Diccionario con los datos de la sección
+-        """
+-        pass
+-    
+-    @abstractmethod
+-    def set_data(self, data: Dict[str, Any]):
+-        """
+-        Establece los datos de la sección
+-        
+-        Args:
+-            data: Diccionario con los datos a establecer
+-        """
+-        pass
+-    
+-    @abstractmethod
+-    def clear_data(self):
+-        """Limpia los datos de la sección"""
+-        pass
+diff --git a/services/validation_mixin.py b/services/validation_mixin.py
+deleted file mode 100644
+index 232a5d8..0000000
+--- a/services/validation_mixin.py
++++ /dev/null
+@@ -1,34 +0,0 @@
+-from abc import abstractmethod
+-from typing import List
+-
+-
+-class ValidationMixin:
+-    """Mixin class that provides validation functionality"""
+-    
+-    @abstractmethod
+-    def validate(self) -> List[str]:
+-        """
+-        Valida los datos de la sección
+-        
+-        Returns:
+-            Lista de mensajes de error. Vacía si la validación es exitosa
+-        """
+-        pass
+-    
+-    def is_valid(self) -> bool:
+-        """
+-        Verifica si los datos son válidos
+-        
+-        Returns:
+-            True si no hay errores de validación, False en caso contrario
+-        """
+-        return len(self.validate()) == 0
+-    
+-    def get_validation_errors(self) -> List[str]:
+-        """
+-        Retorna la lista de errores de validación
+-        
+-        Returns:
+-            Lista de mensajes de error
+-        """
+-        return self.validate()
+diff --git a/styles/__init__.py b/styles/__init__.py
+index 53653aa..e4afa51 100644
+--- a/styles/__init__.py
++++ b/styles/__init__.py
+@@ -1,5 +1,4 @@
+ import os
+-from aqt import mw
+ from aqt.theme import theme_manager
+ 
+ 
+diff --git a/ui/config_form/actions_section.py b/ui/config_form/actions_section.py
+index 2a5489a..5f48c2e 100644
+--- a/ui/config_form/actions_section.py
++++ b/ui/config_form/actions_section.py
+@@ -1,6 +1,4 @@
+-from typing import Dict, Any
+-from aqt.qt import QHBoxLayout, Qt
+-from .base_section import BaseSection
++from .base_section_abs import BaseSection
+ from ...constants.ui import UIConstants
+ 
+ class ActionsSection(BaseSection):
+@@ -9,7 +7,6 @@ class ActionsSection(BaseSection):
+     def __init__(self, parent=None):
+         super().__init__(UIConstants.SECTION_ACTIONS, parent)
+         self.create_button = None
+-        self.test_button = None
+         self.cancel_button = None
+         self.status_label = None
+         self.create_widgets()
+@@ -23,12 +20,6 @@ class ActionsSection(BaseSection):
+             'extended'
+         )
+         
+-        # Botón para probar la configuración
+-        self.test_button = self._create_styled_button(
+-            UIConstants.BUTTON_TEST_CONFIGURATION,
+-            'extended'
+-        )
+-        
+         # Botón para cancelar
+         self.cancel_button = self._create_styled_button(
+             UIConstants.BUTTON_CANCEL,
+@@ -47,54 +38,33 @@ class ActionsSection(BaseSection):
+         # Layout horizontal para botones
+         button_layout = self._create_horizontal_layout()
+         button_layout.addWidget(self.create_button)
+-        button_layout.addWidget(self.test_button)
+         button_layout.addWidget(self.cancel_button)
+-        button_layout.addStretch()
++        #button_layout.addStretch()
+         
+         # Agregar botones y etiqueta de estado al layout principal
+         self.layout.addLayout(button_layout)
+         self.layout.addWidget(self.status_label)
+     
+-    def get_data(self) -> Dict[str, Any]:
+-        """Retorna los datos de la sección (en este caso, vacío)"""
+-        return {}
++    def connect_create_action(self, handler):
++        """Conecta el botón de crear con el handler proporcionado"""
++        if self.create_button:
++            self.create_button.clicked.connect(handler)
+     
+-    def set_data(self, data: Dict[str, Any]):
+-        """Establece los datos de la sección (para edición)"""
+-        pass  # No hay datos que establecer en esta sección
+-    
+-    def clear_data(self):
+-        """Limpia los datos de la sección"""
+-        self.set_status("✅ Listo para crear mazos filtrados")
++    def connect_test_action(self, handler):
++        """Conecta el botón de prueba con el handler proporcionado"""
++        # Nota: Actualmente no hay botón de prueba, pero el método está definido para compatibilidad
++        pass
+     
+-    def set_status(self, message: str, is_error: bool = False):
+-        """Establece el mensaje de estado"""
+-        self.status_label.setText(message)
+-        if is_error:
+-            self.status_label.setProperty("class", "error")
+-            self.status_label.setStyleSheet(styles.LABEL)
+-        else:
+-            self.status_label.setProperty("class", "")
+-            self.status_label.setStyleSheet(styles.LABEL)
+-    
+-    def connect_create_action(self, callback):
+-        """Conecta el botón de crear a una función callback"""
+-        self.create_button.clicked.connect(callback)
+-    
+-    def connect_test_action(self, callback):
+-        """Conecta el botón de probar a una función callback"""
+-        self.test_button.clicked.connect(callback)
+-    
+-    def connect_cancel_action(self, callback):
+-        """Conecta el botón de cancelar a una función callback"""
+-        self.cancel_button.clicked.connect(callback)
++    def connect_cancel_action(self, handler):
++        """Conecta el botón de cancelar con el handler proporcionado"""
++        if self.cancel_button:
++            self.cancel_button.clicked.connect(handler)
+     
+     def set_create_button_text(self, text: str):
+-        """Cambia el texto del botón de crear (para modo edición)"""
+-        self.create_button.setText(text)
++        """Establece el texto del botón de crear"""
++        if self.create_button:
++            self.create_button.setText(text)
+     
+-    def disable_buttons(self, disabled: bool = True):
+-        """Habilita o deshabilita todos los botones"""
+-        self.create_button.setDisabled(disabled)
+-        self.test_button.setDisabled(disabled)
+-        self.cancel_button.setDisabled(disabled)
++    def clear_data(self):
++        """Limpia los datos de la sección (no aplica para acciones)"""
++        pass
+\ No newline at end of file
+diff --git a/ui/config_form/base_section.py b/ui/config_form/base_section.py
+deleted file mode 100644
+index 07f93b5..0000000
+--- a/ui/config_form/base_section.py
++++ /dev/null
+@@ -1,48 +0,0 @@
+-from aqt.qt import QGroupBox
+-from ...constants import ButtonWidthType, LabelWordWrap
+-from ...styles import styles
+-from ..factories import WidgetFactory, LayoutFactory
+-from ...services import ValidationMixin, DataManagementMixin, AbstractSectionInterface
+-
+-class BaseSection(QGroupBox, ValidationMixin, DataManagementMixin, AbstractSectionInterface):
+-    """Clase base para todas las secciones del formulario"""
+-    
+-    def __init__(self, title: str, parent=None):
+-        super().__init__(title, parent)
+-        self._setup_ui()
+-        self._apply_styles()
+-    
+-    def _setup_ui(self):
+-        """Configura la UI básica de la sección"""
+-        self.layout = LayoutFactory.create_section_layout()
+-        self.setLayout(self.layout)
+-    
+-    def _apply_styles(self):
+-        """Aplica estilos CSS a la sección"""
+-        self.setStyleSheet(styles.GROUPBOX)
+-    
+-    # Métodos comunes para configuración de widgets - delegados a WidgetFactory
+-    def _create_styled_input(self, widget_class, placeholder_text=None, max_height=None):
+-        """Crea un widget de entrada con estilos comunes"""
+-        return WidgetFactory.create_styled_input(widget_class, placeholder_text, max_height)
+-    
+-    def _create_styled_button(self, text, width_type=ButtonWidthType.NORMAL):
+-        """Crea un botón con estilos comunes"""
+-        return WidgetFactory.create_styled_button(text, width_type)
+-    
+-    def _create_styled_label(self, text, object_name=None, word_wrap=LabelWordWrap.ENABLED):
+-        """Crea una etiqueta con estilos comunes"""
+-        return WidgetFactory.create_styled_label(text, object_name, word_wrap)
+-    
+-    # Métodos comunes para configuración de layouts - delegados a LayoutFactory
+-    def _create_form_layout(self):
+-        """Crea un QFormLayout con márgenes y espaciado estándar"""
+-        return LayoutFactory.create_form_layout()
+-    
+-    def _create_horizontal_layout(self):
+-        """Crea un QHBoxLayout con espaciado estándar"""
+-        return LayoutFactory.create_horizontal_layout()
+-    
+-    def _create_vertical_layout(self):
+-        """Crea un QVBoxLayout con márgenes y espaciado estándar"""
+-        return LayoutFactory.create_vertical_layout()
+\ No newline at end of file
+diff --git a/ui/config_form/basic_config_section.py b/ui/config_form/basic_config_section.py
+index bc3723a..b986a5c 100644
+--- a/ui/config_form/basic_config_section.py
++++ b/ui/config_form/basic_config_section.py
+@@ -1,6 +1,5 @@
+-from typing import Dict, Any
+-from aqt.qt import QLineEdit, QFormLayout
+-from .base_section import BaseSection
++from aqt.qt import QLineEdit
++from .base_section_abs import BaseSection
+ from ...constants.ui import UIConstants
+ 
+ class BasicConfigSection(BaseSection):
+@@ -34,26 +33,4 @@ class BasicConfigSection(BaseSection):
+         # Agregamos el form layout y la descripción al layout principal
+         self.layout.addLayout(form_layout)
+         self.layout.addWidget(self.description_label)
+-    
+-    def get_data(self) -> Dict[str, Any]:
+-        """Retorna los datos de la sección"""
+-        return {
+-            "name": self.name_input.text().strip()
+-        }
+-    
+-    def set_data(self, data: Dict[str, Any]):
+-        """Establece los datos de la sección (para edición)"""
+-        if "name" in data:
+-            self.name_input.setText(str(data["name"]))
+-    
+-    def clear_data(self):
+-        """Limpia los datos de la sección"""
+-        self.name_input.clear()
+-    
+-    def validate(self) -> list:
+-        """Valida los datos de la sección"""
+-        errors = []
+-        name = self.name_input.text().strip()
+-        if len(name) == 0:
+-            errors.append("El nombre de la configuración es obligatorio")
+-        return errors
++    
+\ No newline at end of file
+diff --git a/ui/config_form/grouping_section.py b/ui/config_form/grouping_section.py
+index df4f740..9889be4 100644
+--- a/ui/config_form/grouping_section.py
++++ b/ui/config_form/grouping_section.py
+@@ -1,8 +1,8 @@
+-from typing import Dict, Any, List
++from typing import Dict, Any
+ from aqt.qt import (
+     QCheckBox, QListWidget, QListWidgetItem, Qt, QComboBox, QLineEdit
+ )
+-from .base_section import BaseSection
++from .base_section_abs import BaseSection
+ from ...constants import GroupingType, GroupingCombination
+ from ...constants.ui import UIConstants
+ 
+diff --git a/ui/config_form/search_section.py b/ui/config_form/search_section.py
+index 4447468..6c5b444 100644
+--- a/ui/config_form/search_section.py
++++ b/ui/config_form/search_section.py
+@@ -1,6 +1,6 @@
+ from typing import Dict, Any
+-from aqt.qt import QTextEdit, QFormLayout, QVBoxLayout, Qt
+-from .base_section import BaseSection
++from aqt.qt import QTextEdit, Qt
++from .base_section_abs import BaseSection
+ from ...constants.ui import UIConstants
+ 
+ class SearchSection(BaseSection):
+diff --git a/ui/factories/layout_factory.py b/ui/factories/layout_factory.py
+index 57d8a7d..5faa5b6 100644
+--- a/ui/factories/layout_factory.py
++++ b/ui/factories/layout_factory.py
+@@ -5,8 +5,7 @@ from ...constants import UIConstants
+ class LayoutFactory:
+     """Factory class for creating layouts with standard configurations"""
+     
+-    @staticmethod
+-    def create_form_layout() -> QFormLayout:
++    def _create_form_layout(self) -> QFormLayout:
+         """
+         Crea un QFormLayout con márgenes y espaciado estándar
+         
+@@ -16,8 +15,7 @@ class LayoutFactory:
+         layout = QFormLayout()
+         return layout
+     
+-    @staticmethod
+-    def create_horizontal_layout() -> QHBoxLayout:
++    def _create_horizontal_layout(self) -> QHBoxLayout:
+         """
+         Crea un QHBoxLayout con espaciado estándar
+         
+@@ -27,8 +25,7 @@ class LayoutFactory:
+         layout = QHBoxLayout()
+         return layout
+     
+-    @staticmethod
+-    def create_vertical_layout() -> QVBoxLayout:
++    def _create_vertical_layout(self) -> QVBoxLayout:
+         """
+         Crea un QVBoxLayout con márgenes y espaciado estándar
+         
+@@ -38,8 +35,7 @@ class LayoutFactory:
+         layout = QVBoxLayout()
+         return layout
+     
+-    @staticmethod
+-    def create_section_layout() -> QVBoxLayout:
++    def _create_section_layout(self) -> QVBoxLayout:
+         """
+         Crea un QVBoxLayout con márgenes y espaciado específicos para secciones
+         
+diff --git a/ui/factories/widget_factory.py b/ui/factories/widget_factory.py
+index 3f720a7..f3d760f 100644
+--- a/ui/factories/widget_factory.py
++++ b/ui/factories/widget_factory.py
+@@ -7,8 +7,7 @@ from ...styles import styles
+ class WidgetFactory:
+     """Factory class for creating styled UI widgets"""
+     
+-    @staticmethod
+-    def create_styled_input(widget_class: Type, 
++    def _create_styled_input(self, widget_class: Type, 
+                           placeholder_text: Optional[str] = None, 
+                           max_height: Optional[int] = None):
+         """
+@@ -30,8 +29,8 @@ class WidgetFactory:
+         widget.setStyleSheet(styles.INPUT)
+         return widget
+     
+-    @staticmethod
+-    def create_styled_button(text: str, 
++    
++    def _create_styled_button(self, text: str, 
+                            width_type: ButtonWidthType = ButtonWidthType.NORMAL) -> QPushButton:
+         """
+         Crea un botón con estilos comunes
+@@ -53,8 +52,8 @@ class WidgetFactory:
+         
+         return button
+     
+-    @staticmethod
+-    def create_styled_label(text: str, 
++
++    def _create_styled_label(self, text: str, 
+                            object_name: Optional[str] = None, 
+                            word_wrap: LabelWordWrap = LabelWordWrap.ENABLED) -> QLabel:
+         """

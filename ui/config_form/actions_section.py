@@ -1,6 +1,4 @@
-from typing import Dict, Any
-from aqt.qt import QHBoxLayout, Qt
-from .base_section import BaseSection
+from .base_section_abs import BaseSection
 from ...constants.ui import UIConstants
 
 class ActionsSection(BaseSection):
@@ -9,7 +7,6 @@ class ActionsSection(BaseSection):
     def __init__(self, parent=None):
         super().__init__(UIConstants.SECTION_ACTIONS, parent)
         self.create_button = None
-        self.test_button = None
         self.cancel_button = None
         self.status_label = None
         self.create_widgets()
@@ -20,12 +17,6 @@ class ActionsSection(BaseSection):
         # Botón principal para crear mazos
         self.create_button = self._create_styled_button(
             UIConstants.BUTTON_CREATE_FILTERED_DECKS,
-            'extended'
-        )
-        
-        # Botón para probar la configuración
-        self.test_button = self._create_styled_button(
-            UIConstants.BUTTON_TEST_CONFIGURATION,
             'extended'
         )
         
@@ -47,54 +38,33 @@ class ActionsSection(BaseSection):
         # Layout horizontal para botones
         button_layout = self._create_horizontal_layout()
         button_layout.addWidget(self.create_button)
-        button_layout.addWidget(self.test_button)
         button_layout.addWidget(self.cancel_button)
-        button_layout.addStretch()
+        #button_layout.addStretch()
         
         # Agregar botones y etiqueta de estado al layout principal
         self.layout.addLayout(button_layout)
         self.layout.addWidget(self.status_label)
     
-    def get_data(self) -> Dict[str, Any]:
-        """Retorna los datos de la sección (en este caso, vacío)"""
-        return {}
+    def connect_create_action(self, handler):
+        """Conecta el botón de crear con el handler proporcionado"""
+        if self.create_button:
+            self.create_button.clicked.connect(handler)
     
-    def set_data(self, data: Dict[str, Any]):
-        """Establece los datos de la sección (para edición)"""
-        pass  # No hay datos que establecer en esta sección
+    def connect_test_action(self, handler):
+        """Conecta el botón de prueba con el handler proporcionado"""
+        # Nota: Actualmente no hay botón de prueba, pero el método está definido para compatibilidad
+        pass
     
-    def clear_data(self):
-        """Limpia los datos de la sección"""
-        self.set_status("✅ Listo para crear mazos filtrados")
-    
-    def set_status(self, message: str, is_error: bool = False):
-        """Establece el mensaje de estado"""
-        self.status_label.setText(message)
-        if is_error:
-            self.status_label.setProperty("class", "error")
-            self.status_label.setStyleSheet(styles.LABEL)
-        else:
-            self.status_label.setProperty("class", "")
-            self.status_label.setStyleSheet(styles.LABEL)
-    
-    def connect_create_action(self, callback):
-        """Conecta el botón de crear a una función callback"""
-        self.create_button.clicked.connect(callback)
-    
-    def connect_test_action(self, callback):
-        """Conecta el botón de probar a una función callback"""
-        self.test_button.clicked.connect(callback)
-    
-    def connect_cancel_action(self, callback):
-        """Conecta el botón de cancelar a una función callback"""
-        self.cancel_button.clicked.connect(callback)
+    def connect_cancel_action(self, handler):
+        """Conecta el botón de cancelar con el handler proporcionado"""
+        if self.cancel_button:
+            self.cancel_button.clicked.connect(handler)
     
     def set_create_button_text(self, text: str):
-        """Cambia el texto del botón de crear (para modo edición)"""
-        self.create_button.setText(text)
+        """Establece el texto del botón de crear"""
+        if self.create_button:
+            self.create_button.setText(text)
     
-    def disable_buttons(self, disabled: bool = True):
-        """Habilita o deshabilita todos los botones"""
-        self.create_button.setDisabled(disabled)
-        self.test_button.setDisabled(disabled)
-        self.cancel_button.setDisabled(disabled)
+    def clear_data(self):
+        """Limpia los datos de la sección (no aplica para acciones)"""
+        pass

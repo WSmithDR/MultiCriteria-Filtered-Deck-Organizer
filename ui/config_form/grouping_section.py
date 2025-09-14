@@ -1,8 +1,8 @@
-from typing import Dict, Any, List
+from typing import Dict, Any
 from aqt.qt import (
     QCheckBox, QListWidget, QListWidgetItem, Qt, QComboBox, QLineEdit
 )
-from .base_section import BaseSection
+from .base_section_abs import BaseSection
 from ...constants import GroupingType, GroupingCombination
 from ...constants.ui import UIConstants
 

@@ -1,6 +1,6 @@
 from typing import Dict, Any
-from aqt.qt import QTextEdit, QFormLayout, QVBoxLayout, Qt
-from .base_section import BaseSection
+from aqt.qt import QTextEdit, Qt
+from .base_section_abs import BaseSection
 from ...constants.ui import UIConstants
 
 class SearchSection(BaseSection):

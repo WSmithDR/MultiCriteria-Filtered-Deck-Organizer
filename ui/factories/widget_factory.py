@@ -7,8 +7,7 @@ from ...styles import styles
 class WidgetFactory:
     """Factory class for creating styled UI widgets"""
     
-    @staticmethod
-    def create_styled_input(widget_class: Type, 
+    def _create_styled_input(self, widget_class: Type, 
                           placeholder_text: Optional[str] = None, 
                           max_height: Optional[int] = None):
         """
@@ -30,8 +29,8 @@ class WidgetFactory:
         widget.setStyleSheet(styles.INPUT)
         return widget
     
-    @staticmethod
-    def create_styled_button(text: str, 
+    
+    def _create_styled_button(self, text: str, 
                            width_type: ButtonWidthType = ButtonWidthType.NORMAL) -> QPushButton:
         """
         Crea un botón con estilos comunes
@@ -53,8 +52,8 @@ class WidgetFactory:
         
         return button
     
-    @staticmethod
-    def create_styled_label(text: str, 
+
+    def _create_styled_label(self, text: str, 
                            object_name: Optional[str] = None, 
                            word_wrap: LabelWordWrap = LabelWordWrap.ENABLED) -> QLabel:
         """

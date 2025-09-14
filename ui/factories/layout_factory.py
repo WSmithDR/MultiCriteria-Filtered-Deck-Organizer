@@ -5,8 +5,7 @@ from ...constants import UIConstants
 class LayoutFactory:
     """Factory class for creating layouts with standard configurations"""
     
-    @staticmethod
-    def create_form_layout() -> QFormLayout:
+    def _create_form_layout(self) -> QFormLayout:
         """
         Crea un QFormLayout con márgenes y espaciado estándar
         
@@ -16,8 +15,7 @@ class LayoutFactory:
         layout = QFormLayout()
         return layout
     
-    @staticmethod
-    def create_horizontal_layout() -> QHBoxLayout:
+    def _create_horizontal_layout(self) -> QHBoxLayout:
         """
         Crea un QHBoxLayout con espaciado estándar
         
@@ -27,8 +25,7 @@ class LayoutFactory:
         layout = QHBoxLayout()
         return layout
     
-    @staticmethod
-    def create_vertical_layout() -> QVBoxLayout:
+    def _create_vertical_layout(self) -> QVBoxLayout:
         """
         Crea un QVBoxLayout con márgenes y espaciado estándar
         
@@ -38,8 +35,7 @@ class LayoutFactory:
         layout = QVBoxLayout()
         return layout
     
-    @staticmethod
-    def create_section_layout() -> QVBoxLayout:
+    def _create_section_layout(self) -> QVBoxLayout:
         """
         Crea un QVBoxLayout con márgenes y espaciado específicos para secciones
         

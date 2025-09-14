@@ -1,6 +1,5 @@
-from typing import Dict, Any
-from aqt.qt import QLineEdit, QFormLayout
-from .base_section import BaseSection
+from aqt.qt import QLineEdit
+from .base_section_abs import BaseSection
 from ...constants.ui import UIConstants
 
 class BasicConfigSection(BaseSection):
@@ -35,25 +34,3 @@ class BasicConfigSection(BaseSection):
         self.layout.addLayout(form_layout)
         self.layout.addWidget(self.description_label)
     
-    def get_data(self) -> Dict[str, Any]:
-        """Retorna los datos de la sección"""
-        return {
-            "name": self.name_input.text().strip()
-        }
-    
-    def set_data(self, data: Dict[str, Any]):
-        """Establece los datos de la sección (para edición)"""
-        if "name" in data:
-            self.name_input.setText(str(data["name"]))
-    
-    def clear_data(self):
-        """Limpia los datos de la sección"""
-        self.name_input.clear()
-    
-    def validate(self) -> list:
-        """Valida los datos de la sección"""
-        errors = []
-        name = self.name_input.text().strip()
-        if len(name) == 0:
-            errors.append("El nombre de la configuración es obligatorio")
-        return errors
