@@ -1,5 +1,5 @@
 from typing import Optional, Type
-from aqt.qt import QPushButton, QLabel
+from aqt.qt import QPushButton, QLabel, QCheckBox
 from ...constants import UIConstants, ButtonWidthType, LabelWordWrap
 from ...styles import styles
 
@@ -78,3 +78,23 @@ class WidgetFactory:
             label.setWordWrap(False)
         
         return label
+
+    def _create_styled_checkbox(self, text: str, 
+                              tooltip: Optional[str] = None) -> QCheckBox:
+        """
+        Crea una casilla de verificación con estilos comunes
+        
+        Args:
+            text: Texto de la casilla de verificación
+            tooltip: Texto de ayuda opcional
+            
+        Returns:
+            Casilla de verificación configurada con estilos
+        """
+        checkbox = QCheckBox(text)
+        checkbox.setStyleSheet(styles.CHECKBOX)
+        
+        if tooltip:
+            checkbox.setToolTip(tooltip)
+        
+        return checkbox

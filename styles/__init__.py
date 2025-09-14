@@ -65,6 +65,12 @@ class _Styles:
         suffix = _Styles._get_theme_suffix()
         return _Styles._load_qss_file(f'label{suffix}.qss')
     
+    @property
+    def CHECKBOX(self) -> str:
+        """Estilos para QCheckBox según el tema actual"""
+        suffix = _Styles._get_theme_suffix()
+        return _Styles._load_qss_file(f'checkbox{suffix}.qss')
+    
     # Métodos de conveniencia
     def get_theme_info(self) -> dict:
         """Retorna información sobre el tema actual"""
