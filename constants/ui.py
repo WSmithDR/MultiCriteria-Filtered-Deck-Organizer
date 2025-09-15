@@ -1,7 +1,7 @@
-
-
 class UIConstants:
     """Constantes para la interfaz de usuario"""
+
+    ADDON_NAME = "Multicriteria Filtered Deck Organizer"
     
     # Tamaños y márgenes
     SECTION_MARGIN = 10

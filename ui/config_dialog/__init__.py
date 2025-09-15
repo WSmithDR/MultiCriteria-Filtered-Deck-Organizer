@@ -1,6 +1,6 @@
 from aqt.utils import showInfo
 from aqt.qt import QDialog, QVBoxLayout, QMessageBox, QScrollArea, QWidget, Qt
-from ...constants import GeneralConstants, UIConstants
+from ...constants import UIConstants
 from ...styles import styles
 from ..config_form import ConfigForm
 
@@ -18,9 +18,9 @@ class ConfigDialog(QDialog):
         # Si estamos en modo edición, cargar los datos
         if self.edit_data:
             self.load_edit_data()
-            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_EDIT} - {GeneralConstants.ADDON_NAME}")
+            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_EDIT} - {UIConstants.ADDON_NAME}")
         else:
-            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_MAIN} - {GeneralConstants.ADDON_NAME}")
+            self.setWindowTitle(f"{UIConstants.DIALOG_TITLE_MAIN} - {UIConstants.ADDON_NAME}")
     
     def setup_ui(self):
         """Configura la interfaz de usuario principal"""
