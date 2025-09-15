@@ -54,6 +54,42 @@ class UIConstants:
     PLACEHOLDER_FIELD_NAME_ACTIVE = "Field name to group by"
     PLACEHOLDER_FIELD_NAME_INACTIVE = "Not applicable for this type"
     CHECKBOX_ENABLE_MULTIPLE = "Enable multiple groups"
+    CHECKBOX_ENABLE_GROUPING = "Enable Grouping"
+    CHECKBOX_ENABLE_GROUPING_DESCRIPTION = "Create separate filtered decks for each group"
+    
+    # Textos de la interfaz - Agrupamiento
+    GROUPING_RULES = "Grouping Rules"
+    GROUPING_RULES_ORDER = "Grouping Rules Order"
+    RULES_ORDER_DESCRIPTION = "Rules will be applied in this order:"
+    BUTTON_MOVE_UP = "Move Up"
+    BUTTON_MOVE_DOWN = "Move Down"
+    BUTTON_REMOVE_RULE = "Remove Rule"
+    GROUP_BY_FIELD = "Group by Field"
+    GROUP_BY_FIELD_VALUE = "Group by Field Value"
+    GROUP_BY_FIELD_DESCRIPTION = "Create separate decks for each unique field value"
+    SELECT_FIELD_PLACEHOLDER = "Select field..."
+    LABEL_FIELD = "Field:"
+    CHECKBOX_CASE_SENSITIVE = "Case Sensitive"
+    CHECKBOX_CASE_SENSITIVE_DESCRIPTION = "Treat 'Value' and 'value' as different groups"
+    CHECKBOX_TRIM_WHITESPACE = "Trim Whitespace"
+    CHECKBOX_TRIM_WHITESPACE_DESCRIPTION = "Remove leading/trailing whitespace from field values"
+    BUTTON_ADD_FIELD_RULE = "Add Field Rule"
+    GROUP_BY_NOTE_TYPE = "Group by Note Type"
+    GROUP_BY_NOTE_TYPE_DESCRIPTION = "Create separate decks for each note type"
+    LABEL_SELECT_NOTE_TYPES = "Select Note Types:"
+    BUTTON_ADD_NOTE_TYPE_RULE = "Add Note Type Rule"
+    
+    # Textos de la interfaz - Errores de validación
+    ERROR_NO_GROUPING_RULES = "At least one grouping rule must be specified when grouping is enabled"
+    ERROR_EMPTY_FIELD_NAME = "Field name cannot be empty for field grouping rules"
+    ERROR_NO_NOTE_TYPES_SELECTED = "At least one note type must be selected for notetype grouping rules"
+    
+    # Textos de la interfaz - Lista de reglas
+    RULE_PREFIX_FIELD = "Field: "
+    RULE_PREFIX_NOTE_TYPES = "Note Types: "
+    RULE_SUFFIX_CASE_SENSITIVE = " (Case Sensitive)"
+    RULE_SUFFIX_TRIMMED = " (Trimmed)"
+    RULE_MORE_ITEMS = " (+{count} more)"
     
     # Textos de la interfaz - Ejemplos de búsqueda
     SEARCH_EXAMPLES_TITLE = "<b>Examples:</b><br>"

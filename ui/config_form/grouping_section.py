@@ -23,14 +23,9 @@ class GroupingSection(BaseSection):
         """Crea los widgets para la sección de agrupamiento"""
         # Widget principal de agrupamiento
         self.grouping_enabled_checkbox = self._create_styled_checkbox(
-            "Enable Grouping", 
-            "Create separate filtered decks for each group"
+            UIConstants.CHECKBOX_ENABLE_GROUPING, 
+            UIConstants.CHECKBOX_ENABLE_GROUPING_DESCRIPTION
         )
-        
-        # Contenedor de reglas de agrupamiento
-        self.grouping_rules_container = QGroupBox("Grouping Rules")
-        self.grouping_rules_layout = QVBoxLayout()
-        self.grouping_rules_container.setLayout(self.grouping_rules_layout)
         
         # Sección de agrupamiento por campo
         self.field_grouping_section = self._create_field_grouping_section()
@@ -44,9 +39,9 @@ class GroupingSection(BaseSection):
         self.rules_list_widget.setStyleSheet(styles.INPUT)
         
         # Botones para manejar el orden de las reglas
-        self.move_up_button = self._create_styled_button("Move Up")
-        self.move_down_button = self._create_styled_button("Move Down")
-        self.remove_rule_button = self._create_styled_button("Remove Rule")
+        self.move_up_button = self._create_styled_button(UIConstants.BUTTON_MOVE_UP)
+        self.move_down_button = self._create_styled_button(UIConstants.BUTTON_MOVE_DOWN)
+        self.remove_rule_button = self._create_styled_button(UIConstants.BUTTON_REMOVE_RULE)
         
         # Conectar eventos
         self.grouping_enabled_checkbox.stateChanged.connect(self._on_grouping_enabled_changed)
@@ -59,38 +54,38 @@ class GroupingSection(BaseSection):
     
     def _create_field_grouping_section(self) -> QGroupBox:
         """Crea la sección de agrupamiento por campo"""
-        section = QGroupBox("Group by Field")
+        section = QGroupBox(UIConstants.GROUP_BY_FIELD)
         layout = QFormLayout()
         
         # Checkbox para habilitar agrupamiento por campo
         self.field_grouping_enabled = self._create_styled_checkbox(
-            "Group by Field Value",
-            "Create separate decks for each unique field value"
+            UIConstants.GROUP_BY_FIELD_VALUE,
+            UIConstants.GROUP_BY_FIELD_DESCRIPTION
         )
         
         # Combobox para seleccionar el campo
         self.field_selector = QComboBox()
         self.field_selector.setStyleSheet(styles.INPUT)
-        self.field_selector.addItem("Select field...")
+        self.field_selector.addItem(UIConstants.SELECT_FIELD_PLACEHOLDER)
         
         # Opciones adicionales para agrupamiento por campo
         self.field_case_sensitive = self._create_styled_checkbox(
-            "Case Sensitive",
-            "Treat 'Value' and 'value' as different groups"
+            UIConstants.CHECKBOX_CASE_SENSITIVE,
+            UIConstants.CHECKBOX_CASE_SENSITIVE_DESCRIPTION
         )
         
         self.field_trim_values = self._create_styled_checkbox(
-            "Trim Whitespace",
-            "Remove leading/trailing whitespace from field values"
+            UIConstants.CHECKBOX_TRIM_WHITESPACE,
+            UIConstants.CHECKBOX_TRIM_WHITESPACE_DESCRIPTION
         )
         
         # Botón para agregar regla de campo
-        self.add_field_rule_button = self._create_styled_button("Add Field Rule")
+        self.add_field_rule_button = self._create_styled_button(UIConstants.BUTTON_ADD_FIELD_RULE)
         self.add_field_rule_button.clicked.connect(self._add_field_rule)
         
         # Agregar widgets al layout
         layout.addRow(self.field_grouping_enabled)
-        layout.addRow("Field:", self.field_selector)
+        layout.addRow(UIConstants.LABEL_FIELD, self.field_selector)
         layout.addRow(self.field_case_sensitive)
         layout.addRow(self.field_trim_values)
         layout.addRow(self.add_field_rule_button)
@@ -100,13 +95,13 @@ class GroupingSection(BaseSection):
     
     def _create_notetype_grouping_section(self) -> QGroupBox:
         """Crea la sección de agrupamiento por notetype"""
-        section = QGroupBox("Group by Note Type")
+        section = QGroupBox(UIConstants.GROUP_BY_NOTE_TYPE)
         layout = QVBoxLayout()
         
         # Checkbox para habilitar agrupamiento por notetype
         self.notetype_grouping_enabled = self._create_styled_checkbox(
-            "Group by Note Type",
-            "Create separate decks for each note type"
+            UIConstants.GROUP_BY_NOTE_TYPE,
+            UIConstants.GROUP_BY_NOTE_TYPE_DESCRIPTION
         )
         
         # Lista de notetypes disponibles
@@ -116,12 +111,12 @@ class GroupingSection(BaseSection):
         self.notetype_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         
         # Botón para agregar regla de notetype
-        self.add_notetype_rule_button = self._create_styled_button("Add Note Type Rule")
+        self.add_notetype_rule_button = self._create_styled_button(UIConstants.BUTTON_ADD_NOTE_TYPE_RULE)
         self.add_notetype_rule_button.clicked.connect(self._add_notetype_rule)
         
         # Agregar widgets al layout
         layout.addWidget(self.notetype_grouping_enabled)
-        layout.addWidget(QLabel("Select Note Types:"))
+        layout.addWidget(QLabel(UIConstants.LABEL_SELECT_NOTE_TYPES))
         layout.addWidget(self.notetype_list_widget)
         layout.addWidget(self.add_notetype_rule_button)
         
@@ -144,11 +139,11 @@ class GroupingSection(BaseSection):
         main_layout.addLayout(grouping_options_layout)
         
         # Sección de reglas y ordenamiento
-        rules_section = QGroupBox("Grouping Rules Order")
+        rules_section = QGroupBox(UIConstants.GROUPING_RULES_ORDER)
         rules_layout = QVBoxLayout()
         
         # Lista de reglas
-        rules_layout.addWidget(QLabel("Rules will be applied in this order:"))
+        rules_layout.addWidget(QLabel(UIConstants.RULES_ORDER_DESCRIPTION))
         rules_layout.addWidget(self.rules_list_widget)
         
         # Botones de control
@@ -185,7 +180,7 @@ class GroupingSection(BaseSection):
     
     def _add_field_rule(self):
         """Agrega una regla de agrupamiento por campo"""
-        if not self.field_selector.currentText() or self.field_selector.currentText() == "Select field...":
+        if not self.field_selector.currentText() or self.field_selector.currentText() == UIConstants.SELECT_FIELD_PLACEHOLDER:
             return
         
         rule = {
@@ -220,16 +215,16 @@ class GroupingSection(BaseSection):
         
         for i, rule in enumerate(self.grouping_rules):
             if rule['type'] == 'field':
-                text = f"Field: {rule['field_name']}"
+                text = f"{UIConstants.RULE_PREFIX_FIELD}{rule['field_name']}"
                 if rule['case_sensitive']:
-                    text += " (Case Sensitive)"
+                    text += UIConstants.RULE_SUFFIX_CASE_SENSITIVE
                 if rule['trim_values']:
-                    text += " (Trimmed)"
+                    text += UIConstants.RULE_SUFFIX_TRIMMED
             elif rule['type'] == 'notetype':
                 notetypes_text = ", ".join(rule['notetypes'][:3])  # Mostrar solo primeros 3
                 if len(rule['notetypes']) > 3:
-                    notetypes_text += f" (+{len(rule['notetypes'])-3} more)"
-                text = f"Note Types: {notetypes_text}"
+                    notetypes_text += UIConstants.RULE_MORE_ITEMS.format(count=len(rule['notetypes'])-3)
+                text = f"{UIConstants.RULE_PREFIX_NOTE_TYPES}{notetypes_text}"
             
             item = QListWidgetItem(f"{i+1}. {text}")
             self.rules_list_widget.addItem(item)
@@ -263,7 +258,7 @@ class GroupingSection(BaseSection):
         """Establece los campos disponibles para agrupamiento"""
         self.field_names = field_names
         self.field_selector.clear()
-        self.field_selector.addItem("Select field...")
+        self.field_selector.addItem(UIConstants.SELECT_FIELD_PLACEHOLDER)
         self.field_selector.addItems(field_names)
     
     def set_available_notetypes(self, notetypes: List[str]):
@@ -305,16 +300,16 @@ class GroupingSection(BaseSection):
         
         if self.grouping_enabled_checkbox.isChecked():
             if not self.grouping_rules:
-                errors.append("At least one grouping rule must be specified when grouping is enabled")
+                errors.append(UIConstants.ERROR_NO_GROUPING_RULES)
             
             # Validar reglas de campo
             for rule in self.grouping_rules:
                 if rule['type'] == 'field':
                     if not rule.get('field_name'):
-                        errors.append("Field name cannot be empty for field grouping rules")
+                        errors.append(UIConstants.ERROR_EMPTY_FIELD_NAME)
                 
                 elif rule['type'] == 'notetype':
                     if not rule.get('notetypes'):
-                        errors.append("At least one note type must be selected for notetype grouping rules")
+                        errors.append(UIConstants.ERROR_NO_NOTE_TYPES_SELECTED)
         
         return errors
