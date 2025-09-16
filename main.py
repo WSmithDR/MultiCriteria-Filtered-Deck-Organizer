@@ -17,7 +17,7 @@ class Main:
     qconnect(action.triggered, lambda: config_dialog.exec())
     mw.form.menuTools.addAction(action)
 
-    gui_hooks.editor_did_load_note.append(self.__onOpenCard)
+    #gui_hooks.editor_did_load_note.append(self.__onOpenCard)
 
   def __onOpenCard(self, editor):
     showInfo(UIConstants.INFO_CARD_OPENED)
